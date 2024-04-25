@@ -1,0 +1,258 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+  font-family: "Poppins", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+
+}
+body {
+  color: #777;
+  background: #fff;
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1.4;
+  font-family: "Poppins", sans-serif;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+p{
+  font-family: "Poppins", sans-serif;
+}
+.page-wrapper {
+  position: relative;
+  left: 0;
+  transition: all 0.25s;
+}
+
+nav a {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: -0.25px;
+  color: #141a1f !important;
+  padding: 15px 15px 15px 15px;
+  text-decoration: none !important;
+}
+ul {
+  list-style: none;
+}
+
+@import "admin-styles/mixin";
+
+@import "admin-styles/dashboard";
+@import "admin-styles/products";
+@import "admin-styles/chart";
+@import "admin-styles/dashboardapp";
+@import "admin-styles/mediaquery";
+@import "front-end-styles/header";
+@import "front-end-styles/footer";
+@import "front-end-styles/home";
+@import "front-end-styles/productDetails";
+@import "front-end-styles/cart";
+@import "front-end-styles/login";
+
+.admin-container {
+  @include grid(1fr 4fr, 2rem);
+  height: 100vh;
+  background-color: rgb(247, 247, 247);
+  > aside {
+    width: 100%;
+    background-color: white;
+    padding: 1rem;
+    z-index: 10;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    > div {
+      margin: 2rem 1rem;
+      > h5 {
+        @include heading(2px);
+        opacity: 0.8;
+        margin: 1rem 0;
+      }
+      > ul {
+        @include flex(column, unset, unset, 0.5rem);
+        list-style: none;
+        > li {
+          padding: 0.5rem 1rem;
+          border-radius: 10px;
+          a {
+            color: rgba(0, 0, 0, 0.825);
+            @include flex(row, unset);
+          }
+        }
+      }
+    }
+  }
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  th,
+  td {
+    padding: 8px;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  th {
+    font-weight: bold;
+    color: #0000009e;
+    font-size: 1.1rem;
+    font-weight: 400;
+    padding: 2rem 1rem;
+  }
+
+  tbody {
+    tr {
+      box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.093);
+    }
+
+    td {
+     
+
+      img {
+        width: 5rem;
+        height: 5rem;
+        object-fit: contain;
+        border-radius: 10px;
+      }
+      a {
+        text-decoration: none !important;
+        background-color: rgba(44, 104, 255, 0.455);
+        color: rgba(44, 104, 255);
+        padding: 0.25rem 0.5rem;
+        border-radius: 10px;
+      }
+      a h5 {
+        text-decoration: none !important;
+      }
+      button {
+       
+        border: none;
+        outline: none;
+        background-color: transparent;
+        cursor: pointer;
+     
+      }
+
+      &:first-child {
+        border-left: none;
+      }
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+}
+
+.table-pagination {
+  @include flex;
+  padding: 2rem;
+  > button {
+    padding: 0.5rem 1rem;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: rgba(0, 115, 255);
+    color: white;
+    &:disabled {
+      background-color: rgba(0, 115, 255, 0.1);
+      cursor: not-allowed;
+    }
+  }
+}
+
+#hamburger {
+  display: grid;
+  place-items: center;
+  @include square(3rem);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: rgba(44, 104, 255);
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  font-size: 2rem;
+  background-color: white;
+  border-radius: 50%;
+  z-index: 9;
+}
+
+#close-sidebar {
+  width: 80%;
+  margin: 1rem auto;
+  display: block;
+  padding: 0.75rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: rgb(168, 2, 2);
+  color: white;
+  border-radius: 10px;
+}
+
+.loader {
+  width: 100%;
+  height: 100vh;
+  @include flex;
+  > div {
+    @include square(10rem);
+    border-radius: 50%;
+    border-top: 1rem solid rgb(43, 43, 43);
+    border-left: 1rem solid rgb(43, 43, 43);
+    border-right: 1rem solid #fff;
+    border-bottom: 1rem solid #fff;
+    animation: loading-animation 0.5s linear infinite;
+  }
+}
+
+@keyframes loading-animation {
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+@keyframes up-and-down {
+  to {
+    transform: translate(-50%, -20%);
+  }
+}
+
+.react-multi-carousel-item {
+  flex: 1 1 auto;
+  position: relative;
+  width: 411px;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 1400px) {
+  .container,
+  .container-lg,
+  .container-md,
+  .container-sm,
+  .container-xl,
+  .container-xxl {
+    max-width: 1700px !important;
+  }
+}
+p{
+  margin-bottom:.5rem !important
+}

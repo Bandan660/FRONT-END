@@ -1,0 +1,64 @@
+// LoginForm.scss
+
+.login-form {
+  max-width: 300px;
+  margin: 50px auto;
+
+
+  h2 {
+    text-align: center;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .form-group {
+      margin-bottom: .5rem;
+
+      label {
+        margin-bottom: 0.5rem;
+      }
+
+      input {
+        width: 100%;
+        padding: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+    }
+
+    .login {
+      border-color: #222529;
+      background-color: #222529;
+      color: #fff;
+      box-shadow: none;
+      padding: .9em 1.2em;
+      font-size: 1.125em;
+      text-transform: uppercase;
+      outline: none;
+      border: none;
+      cursor: pointer;
+    }
+  }
+  .login {
+    border-color: #222529;
+    background-color: #1171ee;
+    color: #fff;
+    box-shadow: none;
+    padding: .9em 1.2em;
+    font-size: 1.125em;
+    text-transform: uppercase;
+    outline: none;
+    border: none;
+    cursor: pointer;
+  }
+}
+.form-control:focus {
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0 rgba(13, 110, 253, .25) !important;
+}

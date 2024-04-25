@@ -1,0 +1,149 @@
+.hero-section {
+  .carousel-caption {
+    position: absolute;
+    right: 15%;
+    top: 30%;
+    left: 15%;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    text-align: left !important;
+
+    h2 {
+      font-family: "Segoe Script", "Savoye LET";
+      line-height: 1.334;
+      font-size: 2.5rem;
+      color: #777;
+    }
+    h3 {
+      font-size: 2.5em;
+      letter-spacing: 0.185em;
+    }
+    h4 {
+      font-size: 5.625em;
+    }
+    button {
+      border-color: #222529;
+      background-color: #222529;
+      color: #fff;
+      box-shadow: none;
+      padding: 1.1em 2.75em 1.125em;
+      font-size: 1.125em;
+      text-transform: uppercase;
+      outline: none;
+      border: none;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #34393f;
+      }
+    }
+  }
+}
+
+.category-slider {
+  padding: 4vh 4.28vw;
+
+  .section-title {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.8rem;
+  }
+
+  .category-name {
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    text-align: center;
+    text-decoration: none;
+    color: #777;
+    margin-top: 1rem;
+  }
+}
+.Popular-Product {
+  .productCard {
+    &:hover .add-to-cart {
+      visibility: visible;
+      opacity: 1;
+      transition: all 0.2s ease-in-out;
+    }
+    &:hover .wish-list {
+      visibility: visible;
+      opacity: 1;
+      transition: all 0.2s ease-in-out;
+    }
+    img {
+      width: 100%;
+    }
+    .product-details {
+      display: flex;
+      flex-direction: column;
+
+      align-items: flex-start;
+      .productName {
+        font-weight: 400;
+        font-size: 1rem;
+        font-family: "Poppins", sans-serif;
+      }
+      .productDescription {
+        font-size: .9rem;
+        color:#777
+      }
+      .custom-rating {
+        color: #222529;
+      }
+    }
+    .add-to-cart {
+      position: absolute;
+      padding: 0.5rem;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      color: #fff;
+      background-color: #222529;
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 0.025em;
+      font-family: Poppins, sans-serif;
+      text-transform: uppercase;
+      visibility: hidden;
+      opacity: 0;
+      transform: none;
+      margin: 0;
+      border: none;
+      line-height: 1.82;
+      transition: all 0.2s ease-in-out;
+      z-index: 2;
+    }
+    .wish-list {
+      top: 20px !important;
+      right: 30px;
+      border: none;
+      font-size: 1.5rem;
+      background-color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      visibility: hidden;
+      opacity: 0;
+      transition: all 0.2s ease-in-out;
+      z-index: 2;
+
+      &:hover {
+        background-color: black;
+        color: #fff;
+      }
+    }
+  }
+}
+.features-section {
+  .features-box {
+    img {
+      width: 50px;
+      height:50px;
+    }
+  .features-description{
+    color:#7b858a;
+    font-size: .9rem;
+  }
+  }
+}

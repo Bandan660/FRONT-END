@@ -1,0 +1,32 @@
+.cart {
+  .horizontal-quantity {
+    text-align: center;
+    outline: none;
+    border: 1px solid #000;
+    width: 60px;
+    height: 25px;
+  }
+  table {
+    p {
+      font-size: 14px;
+      font-weight: 500;
+    }
+    th {
+      font-size: 15px;
+      font-weight: 500;
+    }
+  }
+  .cart-btn {
+    width: 100%;
+    border-color: #222529;
+    background-color: #222529;
+    color: #fff;
+    box-shadow: none;
+    padding:.7rem;
+    &:hover {
+      background-color: #fff;
+      color: #222529;
+      border: 1px solid #222529;
+    }
+  }
+}
