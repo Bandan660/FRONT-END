@@ -6,10 +6,15 @@ import toast from "react-hot-toast";
 import { auth } from "../../firebase";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
+import { useLoginMutation } from "../../Redux/api/userAPI";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { LoginResponce } from "../../types/api_types";
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [login] = useLoginMutation();
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -23,9 +28,32 @@ const LoginForm: React.FC = () => {
     try {
       const provider = new GoogleAuthProvider();
       const { user } = await signInWithPopup(auth, provider);
+
       console.log(user);
     } catch (error) {
       toast.error("sign in fail");
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const res = await login({
+        email,
+        password,
+      });
+      if ("data" in res) {
+        toast.success("login success");
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+        window.location.href = "/";
+      } else {
+        const error = res.error as FetchBaseQueryError;
+        const message = error.data as LoginResponce;
+        toast.error(message.message);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -35,7 +63,7 @@ const LoginForm: React.FC = () => {
         <h1 className="text-center">Login</h1>
       </div>
       <div className="row d-flex justify-content-center">
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="form-group w-25">
             <label>Email</label>
             <input

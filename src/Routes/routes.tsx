@@ -1,6 +1,7 @@
 import React, { Fragment, lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import Loader from "../Components/Loader";
+import { Toaster } from "react-hot-toast";
 
 // importing routes for main
 const Home = lazy(() => import("../Pages/MainScreen/Home"));
@@ -76,7 +77,7 @@ const Routing = () => {
           ;
         </Routes>
       </Suspense>
-    
+      <Toaster position="top-center" />
     </Fragment>
   );
 };
