@@ -15,6 +15,13 @@ export const userApi = createApi({
         body: user,
       }),
     }),
+    updateuser: builder.mutation<MessageResponce, User>({
+      query: (user) => ({
+        url: `updateuser/${user._id}`,
+        method: "PUT",
+        body: user,
+      }),
+    }),
     login: builder.mutation<MessageResponce, UserLogin>({
       query: (user) => ({
         url: "login",
@@ -22,7 +29,17 @@ export const userApi = createApi({
         body: user,
       }),
     }),
+
+    userdetails: builder.query<MessageResponce, string>({
+      query: (id) => {
+        return {
+          url: `userdetails/${id}`,
+          method: "GET",
+        };
+      },
+    }),
   }),
 });
 
-export const { useRegisterMutation, useLoginMutation } = userApi;
+export const { useRegisterMutation, useLoginMutation, useUserdetailsQuery } =
+  userApi;

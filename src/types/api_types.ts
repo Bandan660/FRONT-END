@@ -1,4 +1,4 @@
-import { User, UserLogin } from "./types";
+import { User } from "./types";
 
 export type MessageResponce = {
   message: string;
@@ -7,6 +7,5 @@ export type MessageResponce = {
 };
 export type LoginResponce = {
   message: string;
-  user: UserLogin;
-  token: string;
+  user: User;
 };

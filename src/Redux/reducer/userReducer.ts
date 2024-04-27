@@ -1,25 +1,32 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { UserReducerInitialState } from "../../types/reducer_types";
+import { LoginState } from "../../types/reducer_types";
 import { User } from "../../types/types";
 
-const initialState: UserReducerInitialState = {
+const initialState: LoginState = {
+  isLoading: false,
+  error: null,
   user: null,
-  isLoading: true,
 };
 
 export const userReducer = createSlice({
   name: "userReducer",
   initialState,
   reducers: {
-    userExist: (state, action: PayloadAction<User>): void => {
+    loginRequest: (state) => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    loginSuccess: (state, action: PayloadAction<User>) => {
       state.isLoading = false;
+      state.error = null;
       state.user = action.payload;
     },
-    userNotExist: (state): void => {
+    loginFailure: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
-      state.user = null;
+      state.error = action.payload;
     },
   },
 });
 
-export const { userExist, userNotExist } = userReducer.actions;
+export const { loginRequest, loginSuccess, loginFailure } = userReducer.actions;
+export default userReducer.reducer;

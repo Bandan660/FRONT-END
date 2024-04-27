@@ -1,7 +1,7 @@
 import { User } from "./types";
 
-export interface UserReducerInitialState {
-  user: User | null;
+export interface LoginState {
   isLoading: boolean;
+  error: string | null;
+  user: User | null;
 }
-

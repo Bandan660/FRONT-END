@@ -9,10 +9,14 @@ import { Link } from "react-router-dom";
 import { useLoginMutation } from "../../Redux/api/userAPI";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { LoginResponce } from "../../types/api_types";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../../Redux/reducer/userReducer";
+import CryptoJS from "crypto-js";
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
   const [login] = useLoginMutation();
 
@@ -43,9 +47,24 @@ const LoginForm: React.FC = () => {
         password,
       });
       if ("data" in res) {
+        const userData = res.data.user;
+        dispatch(loginSuccess(userData));
         toast.success("login success");
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("user", JSON.stringify(res.data.user));
+        const encryptedToken = CryptoJS.AES.encrypt(
+          res.data.token,
+          import.meta.env.VITE_SECRETETOKEN
+        ).toString();
+        const encryptId = CryptoJS.AES.encrypt(
+          JSON.stringify(res.data.user._id),
+          import.meta.env.VITE_SECRETETOKEN
+        ).toString();
+        const encryptRole = CryptoJS.AES.encrypt(
+          JSON.stringify(res.data.user.role),
+          import.meta.env.VITE_SECRETETOKEN
+        ).toString();
+        localStorage.setItem("$#@!%", encryptedToken);
+        localStorage.setItem("$I", encryptId);
+        localStorage.setItem("&5%#", encryptRole);
         window.location.href = "/";
       } else {
         const error = res.error as FetchBaseQueryError;
@@ -53,7 +72,7 @@ const LoginForm: React.FC = () => {
         toast.error(message.message);
       }
     } catch (error) {
-      console.log(error);
+      toast.error("Login failed. Please try again later.");
     }
   };
 

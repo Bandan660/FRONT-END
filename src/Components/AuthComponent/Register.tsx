@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../../Redux/api/userAPI";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { MessageResponce } from "../../types/api_types";
@@ -12,6 +12,7 @@ const RegisterForm: React.FC = () => {
     mobile: "",
     password: "",
   });
+  const Navigate=useNavigate()
 
   const [register] = useRegisterMutation();
 
@@ -34,7 +35,8 @@ const RegisterForm: React.FC = () => {
       });
       if ("data" in res) {
         toast.success(res.data.message);
-        console.log(res.data.message);
+        Navigate("/login");
+       
       } else {
         const error = res.error as FetchBaseQueryError;
         const message = error.data as MessageResponce;

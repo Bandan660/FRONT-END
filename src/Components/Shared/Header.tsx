@@ -1,11 +1,27 @@
 import React, { Fragment, useState } from "react";
 import { FaSearch, FaShoppingBag, FaUser } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { decryptCode } from "../../util";
 
-const user = {};
 const Header = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const userid = localStorage.getItem("$I") || "";
+  const id = decryptCode({ token: userid });
+  const decoderole = localStorage.getItem("&5%#") || "";
+  const role = decryptCode({ token: decoderole });
+  const trimmedRole = role.trim().replace(/\W/g, "");
+
+  const navigate = useNavigate();
+
+  const logoutHandler = () => {
+    localStorage.removeItem("$I");
+    localStorage.removeItem("&5%#");
+    localStorage.removeItem("$#@!%");
+    navigate("/login");
+  };
+
   return (
     <Fragment>
       <div className=" top-0 z-index-100 bg-white d-flex justify-content-center">
@@ -62,7 +78,7 @@ const Header = () => {
                   <FaShoppingBag />
                 </button>
               </li>
-              {user?._id ? (
+              {id ? (
                 <>
                   <li className="menu-item">
                     <button
@@ -72,7 +88,7 @@ const Header = () => {
                       <FaUser />
                     </button>
                     <ul className="sub-menu-account p-0">
-                      {user.role === "admin" ? (
+                      {trimmedRole == "admin" ? (
                         <li className="menu-item px-3 py-2">
                           <Link to="/admin/dashboard" className="p-0">
                             Admin
@@ -93,7 +109,12 @@ const Header = () => {
                         </>
                       )}
                       <li className="menu-item px-3 py-2">
-                        <button className="header-btn logout">Logout</button>
+                        <button
+                          className="header-btn logout"
+                          onClick={logoutHandler}
+                        >
+                          Logout
+                        </button>
                       </li>
                     </ul>
                   </li>
