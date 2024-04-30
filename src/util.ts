@@ -7,3 +7,5 @@ export const decryptCode = ({token}: Token) => {
     const originalText = bytes.toString(CryptoJS.enc.Utf8);
     return originalText;
 };
+
+

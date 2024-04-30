@@ -1,12 +1,17 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { MessageResponce } from "../../types/api_types";
 import { User, UserLogin } from "../../types/types";
+import { decryptCode } from "../../util";
 
 const server = import.meta.env.VITE_SERVER;
+const usertoken = localStorage.getItem("$#@!%") || "";
+const AuthToken = decryptCode({ token: usertoken });
+console.log(AuthToken);
 
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({ baseUrl: `${server}/api/user` }),
+
   endpoints: (builder) => ({
     register: builder.mutation<MessageResponce, User>({
       query: (user) => ({
@@ -30,11 +35,14 @@ export const userApi = createApi({
       }),
     }),
 
-    userdetails: builder.query<MessageResponce, string>({
+    userdetails: builder.query({
       query: (id) => {
         return {
           url: `userdetails/${id}`,
           method: "GET",
+          headers: {
+            Authorization: `Bearer ${AuthToken}`,
+          },
         };
       },
     }),

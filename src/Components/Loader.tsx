@@ -1,9 +1,21 @@
-import React from 'react'
+import React from "react";
 
 const Loader = () => {
-  return (
-    <div>loading...</div>
-  )
-}
 
-export default Loader
+  return (
+    <div className="spinner">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  );
+};
+
+export default Loader;

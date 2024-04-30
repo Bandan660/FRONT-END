@@ -10,7 +10,6 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
-
 }
 body {
   color: #777;
@@ -23,7 +22,7 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
-p{
+p {
   font-family: "Poppins", sans-serif;
 }
 .page-wrapper {
@@ -47,6 +46,7 @@ ul {
 }
 
 @import "admin-styles/mixin";
+@import "front-end-styles/loader";
 
 @import "admin-styles/dashboard";
 @import "admin-styles/products";
@@ -121,8 +121,6 @@ ul {
     }
 
     td {
-     
-
       img {
         width: 5rem;
         height: 5rem;
@@ -140,12 +138,10 @@ ul {
         text-decoration: none !important;
       }
       button {
-       
         border: none;
         outline: none;
         background-color: transparent;
         cursor: pointer;
-     
       }
 
       &:first-child {
@@ -253,6 +249,6 @@ ul {
     max-width: 1700px !important;
   }
 }
-p{
-  margin-bottom:.5rem !important
+p {
+  margin-bottom: 0.5rem !important;
 }

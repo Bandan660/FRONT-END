@@ -1,13 +1,27 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { setupListeners } from "@reduxjs/toolkit/query/react";
 import { userApi } from "./api/userAPI";
-import { userReducer } from "./reducer/userReducer";
+import { categoryApi } from "./api/categoryAPI";
+import { productApi } from "./api/productAPI";
+import userReducer from "./reducer/userReducer";
 
-export const server = import.meta.env.VITE_SERVER;
-
-export const store = configureStore({
+const store = configureStore({
   reducer: {
+    user: userReducer,
+    // Add reducers here if you have any other reducers in your app
     [userApi.reducerPath]: userApi.reducer,
-    [userReducer.name]: userReducer.reducer,
+    [categoryApi.reducerPath]: categoryApi.reducer,
+    [productApi.reducerPath]: productApi.reducer,
   },
-  middleware: (mid) => [...mid(), userApi.middleware],
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(
+      userApi.middleware,
+      categoryApi.middleware,
+      productApi.middleware
+    ),
 });
+
+// Add setupListeners after the store has been created
+setupListeners(store);
+
+export default store;

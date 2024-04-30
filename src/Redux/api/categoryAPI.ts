@@ -13,3 +13,5 @@ export const categoryApi = createApi({
     }),
   }),
 });
+
+export const {useGetcategoryQuery}=categoryApi

@@ -1,8 +1,9 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, Suspense } from "react";
 import Routing from "./Routes/routes";
 import Header from "./Components/Shared/Header";
 import { useLocation } from "react-router-dom";
 import Footer from "./Components/Shared/Footer";
+import Loader from "./Components/Loader";
 
 const App = () => {
   const navigate = useLocation();
@@ -13,6 +14,7 @@ const App = () => {
 
   return (
     <Fragment>
+      <Suspense fallback={<Loader/>}>
       <div className="page-wraper">
         {/* Header component start */}
         {isAdminRoute() ? null : <Header />}
@@ -24,8 +26,11 @@ const App = () => {
         {/* All routes end here  */}
         {isAdminRoute() ? null : <Footer />}
       </div>
+
+      </Suspense>
+     
     </Fragment>
   );
 };
-  
+
 export default App;
