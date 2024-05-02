@@ -24,7 +24,7 @@ const Header = () => {
 
   return (
     <Fragment>
-      <div className=" top-0 z-index-100 bg-white d-flex justify-content-center">
+      <div className=" top-0 z-index-100 bg-white d-flex justify-content-center w-100">
         <nav className="d-flex row header container">
           <div className="d-flex col-md-8 align-content-center gap-5">
             <div className="logo">

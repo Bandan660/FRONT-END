@@ -82,18 +82,7 @@
     .color {
       display: flex;
       gap: 10px;
-      :nth-child(1) {
-        background-color: #000;
-      }
-      :nth-child(2) {
-        background-color: #fff;
-      }
-      :nth-child(3) {
-        background-color: green;
-      }
-      :nth-child(4) {
-        background-color: red;
-      }
+
       button {
         border: 1px solid #000;
         padding: 5px 10px;
@@ -105,25 +94,27 @@
         border-radius: 50%;
       }
     }
-    .horizontal-quantity{
-    
+    .horizontal-quantity {
       text-align: center;
       padding: 0 10px;
       outline: none;
-      width:70px;
+      width: 70px;
       border: 1px solid #000;
     }
     .qty-btn {
       font-size: 15px;
+     
     }
+    .qty-btn:active{
+      border:none !important;
+    }
+    
     .add-to-cart {
       font-size: 18px;
       background-color: #000;
       color: #fff;
       padding: 15px 10px;
       font-weight: 500;
-
-      
     }
     .wish-list {
       font-size: 18px;
@@ -134,17 +125,17 @@
     }
   }
   .MuiTabs-root {
-    button{
+    button {
       color: #000;
       font-weight: bold;
       font-size: 15px;
     }
-    .MuiTabs-indicator{
+    .MuiTabs-indicator {
       background-color: #000;
     }
   }
-  .spec-reviews{
-    p{
+  .spec-reviews {
+    p {
       font-size: 15px;
       font-weight: 500;
     }

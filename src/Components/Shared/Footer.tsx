@@ -3,7 +3,7 @@ import React, { Fragment } from "react";
 const Footer = () => {
   return (
     <Fragment>
-      <div className="footer mt-5 pt-5">
+      <div className="footer mt-5 pt-5 w-100">
         <div className="container">
           <div className="row">
             <div className="col-md-3 col-sm-12">

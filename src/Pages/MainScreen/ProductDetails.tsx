@@ -1,33 +1,46 @@
-import React, { Fragment, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { Fragment, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { Swiper, SwiperClass, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
-import { Tab, Tabs } from "@mui/material";
+import { Skeleton, Tab, Tabs } from "@mui/material";
+
 import {
-  FaHeart,
   FaMinus,
   FaPlus,
   FaRegHeart,
   FaShoppingCart,
   FaStar,
 } from "react-icons/fa";
-import CategoryCarousel, {
-  categoryData,
-} from "../../Components/CategoryCarousel";
+import CategoryCarousel from "../../Components/CategoryCarousel";
 import { useNavigate } from "react-router-dom";
+import { useGetProductsDetailsQuery } from "../../Redux/api/productAPI";
+import Loader from "../../Components/Loader";
 
 const ProductDetails = () => {
   const navigate = useNavigate();
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
   const [value, setValue] = useState<number>(0);
+  const params = useParams();
+  const { id } = params;
+  const [qty, setQty] = useState<number>(1);
 
-  const handleChange = (newValue: number, event: React.SyntheticEvent) => {
+  const handleChange = (newValue: number) => {
     setValue(newValue);
   };
+
+  const { data: product, isLoading, isError } = useGetProductsDetailsQuery(id);
+  const data = product?.product;
+
+  if (isLoading) {
+    return <Loader />;
+  }
+  if (isError) {
+    return <h1>oops something went wrong please try after some time</h1>;
+  }
 
   return (
     <Fragment>
@@ -42,10 +55,10 @@ const ProductDetails = () => {
                       <Link to="/">Home</Link>
                     </li>
                     <li className="breadcrumb-item">
-                      <a href="#">Women</a>
+                      <a href="#">{data?.category}</a>
                     </li>
                     <li className="breadcrumb-item active" aria-current="page">
-                      Shorts
+                      {data.title}
                     </li>
                   </ol>
                 </div>
@@ -60,22 +73,19 @@ const ProductDetails = () => {
                   modules={[FreeMode, Navigation, Thumbs]}
                   className="mySwiper2"
                 >
-                  <SwiperSlide>
-                    <img src="https://www.iconicindia.com/cdn/shop/files/8907361671530_2_1000x.jpg" />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <img src="https://www.iconicindia.com/cdn/shop/files/8907361671530_1_1000x.jpg" />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <img src="https://www.iconicindia.com/cdn/shop/files/8907361671530_3_1000x.jpg" />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <img src="https://www.iconicindia.com/cdn/shop/files/8907361671530_4_1000x.jpg" />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <img src="https://www.iconicindia.com/cdn/shop/files/8907361671530_5_1000x.jpg" />
-                  </SwiperSlide>
+                  {isLoading ? (
+                    <Skeleton variant="rectangular" width={400} height={300} />
+                  ) : (
+                    <>
+                      {data.images.map((image: string, index: number) => (
+                        <SwiperSlide key={index}>
+                          <img src={image} alt={`Image ${index}`} />
+                        </SwiperSlide>
+                      ))}
+                    </>
+                  )}
                 </Swiper>
+
                 <Swiper
                   onSwiper={setThumbsSwiper}
                   spaceBetween={10}
@@ -85,35 +95,27 @@ const ProductDetails = () => {
                   modules={[FreeMode, Navigation, Thumbs]}
                   className="mySwiper"
                 >
-                  <SwiperSlide>
-                    <img src="https://www.iconicindia.com/cdn/shop/files/8907361671530_2_1000x.jpg" />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <img src="https://www.iconicindia.com/cdn/shop/files/8907361671530_1_1000x.jpg" />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <img src="https://www.iconicindia.com/cdn/shop/files/8907361671530_3_1000x.jpg" />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <img src="https://www.iconicindia.com/cdn/shop/files/8907361671530_4_1000x.jpg" />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <img src="https://www.iconicindia.com/cdn/shop/files/8907361671530_5_1000x.jpg" />
-                  </SwiperSlide>
+                  {isLoading ? (
+                    <Skeleton variant="rectangular" width={400} height={300} />
+                  ) : (
+                    <>
+                      {data.images.map((image: string, index: number) => (
+                        <SwiperSlide key={index}>
+                          <img src={image} alt={`Image ${index}`} />
+                        </SwiperSlide>
+                      ))}
+                    </>
+                  )}
                 </Swiper>
               </div>
               <div className="col-md-6 product-info">
-                <h1>Women Shorts</h1>
-                <p>
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Hic
-                  sint reiciendis, iusto accusantium praesentium soluta
-                  asperiores cum fugiat illo! Ducimus.
-                </p>
+                <h1>{data?.title}</h1>
+                <p>{data?.description}.</p>
                 <p className="rating">
                   4.1 Rating <FaStar />
                 </p>
                 <p className="price">
-                  <span>₹ 2000</span>
+                  <span>₹ {data?.price}</span>
                 </p>
                 <p>
                   <span>(MRP incl. of all taxes)</span>
@@ -121,33 +123,52 @@ const ProductDetails = () => {
                 <hr />
                 <p className="size-title">SELECT SIZES :</p>
                 <div className="size-value">
-                  <button>S</button>
-                  <button>M</button>
-                  <button>L</button>
-                  <button>XL</button>
+                  {data.size ? (
+                    data.size.map((item: string, index: number) => (
+                      <button key={index}>{item}</button>
+                    ))
+                  ) : (
+                    <p>Free Size</p>
+                  )}
                 </div>
                 <hr />
                 <p className="size-title">SELECT COLOR :</p>
                 <div className="color">
-                  <button></button>
-                  <button></button>
-                  <button></button>
-                  <button></button>
+                  {data.color ? (
+                    data.color.map((item: string, index: number) => (
+                      <button
+                        key={index}
+                        style={{ backgroundColor: item }}
+                      ></button>
+                    ))
+                  ) : (
+                    <p>no color</p>
+                  )}
                 </div>
                 <hr />
                 <p>QUANTITY : </p>
                 <div className="input-group ">
                   <span className="input-group-btn input-group-prepend">
                     <button
-                      className="btn btn-outline btn-down qty-btn"
+                      className="btn btn-outline btn-down qty-btn "
                       type="button"
+                      onClick={() => qty > 1 && setQty(qty - 1)}
                     >
                       <FaMinus />
                     </button>
                   </span>
-                  <input className="horizontal-quantity " type="text" />
+                  <input
+                    className="horizontal-quantity "
+                    type="text"
+                    value={qty}
+                    readOnly
+                  />
                   <span className="input-group-btn input-group-append">
-                    <button className="btn btn-outline qty-btn" type="button">
+                    <button
+                      className="btn btn-outline qty-btn"
+                      type="button"
+                      onClick={() => setQty(qty + 1)}
+                    >
                       <FaPlus />
                     </button>
                   </span>
@@ -186,14 +207,7 @@ const ProductDetails = () => {
 
               <div hidden={value !== 0}>
                 <div className="row col-md-12 portfolio-container py-5">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Unde corrupti optio itaque? Dolorum accusantium vitae
-                    explicabo culpa suscipit doloremque quae error ratione ex
-                    voluptate architecto ipsa eaque recusandae pariatur,
-                    inventore fuga, aliquam velit nostrum magnam rem itaque
-                    porro veritatis rerum.
-                  </p>
+                  <p>{data.description}</p>
                 </div>
               </div>
               <div hidden={value !== 1}>

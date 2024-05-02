@@ -40,10 +40,13 @@ const Routing = () => {
 
   return (
     <Fragment>
+      <div className="container">
+
+    
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/shop" element={<Shop />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/product/:id/:id" element={<ProductDetails />} />
         <Route path="/checkout/cart" element={<Cart />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<RegisterForm />} />
@@ -82,7 +85,7 @@ const Routing = () => {
         </Route>
         ;
       </Routes>
-
+      </div>
       <Toaster position="top-center" />
     </Fragment>
   );

@@ -4,13 +4,12 @@ import CategoryCarousel from "../../Components/CategoryCarousel";
 import ProductCard from "../../Components/ProductCard";
 import { useGetProductsQuery } from "../../Redux/api/productAPI";
 import { Product } from "../../types/types";
+import { Skeleton } from "@mui/material";
 
 const Home = () => {
   const addToCart = () => {};
   const { data: product, isLoading, isError } = useGetProductsQuery({});
   const data = product?.product;
-
-  
 
   return (
     <Fragment>
@@ -44,12 +43,12 @@ const Home = () => {
           </Carousel.Item>
         </Carousel>
       </section>
-      <section className="category-slider">
+      <section className="">
         <h2 className="section-title ls-n-15 text-center pt-2 m-b-4">
           Shop By Category
         </h2>
 
-        <div className="p-2">
+        <div >
           <CategoryCarousel />
         </div>
       </section>
@@ -59,8 +58,9 @@ const Home = () => {
         </h2>
         <div className="container">
           <div className="row p-2">
+            {isLoading && <Skeleton />}
             {data &&
-              data.map((product:Product) => (
+              data.map((product: Product) => (
                 <ProductCard
                   key={product._id} // Make sure to provide a unique key
                   productId={product._id}
@@ -70,7 +70,7 @@ const Home = () => {
                   handler={addToCart}
                   photo={product.thumbnail}
                   description={product.description}
-                  
+                  category={product.category}
                 />
               ))}
           </div>

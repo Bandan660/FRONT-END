@@ -10,6 +10,7 @@ type ProductProps = {
   price: number;
   stock: number;
   description: string;
+  category: string;
   handler: () => void;
 };
 
@@ -19,11 +20,13 @@ const ProductCard = ({
   name,
   price,
   stock,
+  category,
   description,
   handler,
 }: ProductProps) => {
   const [value, setValue] = useState<number | null>(2);
   const navigate = useNavigate()
+  console.log(category)
 
   return (
     <Fragment>
@@ -45,7 +48,7 @@ const ProductCard = ({
             Add to Bag
           </button>
         </div>
-        <div className="product-details mt-3" onClick={() => navigate(`/product/${name}`)}>
+        <div className="product-details mt-3" onClick={() => navigate(`/product/${category}/${productId}`)}>
           <h3 className="productName">{name}</h3>
 
           <p className="productPrice">₹ {price}</p>

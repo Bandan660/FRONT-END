@@ -15,7 +15,7 @@ const App = () => {
   return (
     <Fragment>
       <Suspense fallback={<Loader/>}>
-      <div className="page-wraper">
+      <div className=" page-wraper d-flex justify-content-between  flex-column">
         {/* Header component start */}
         {isAdminRoute() ? null : <Header />}
 
