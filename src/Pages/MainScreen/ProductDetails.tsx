@@ -16,17 +16,30 @@ import {
   FaStar,
 } from "react-icons/fa";
 import CategoryCarousel from "../../Components/CategoryCarousel";
-import { useNavigate } from "react-router-dom";
 import { useGetProductsDetailsQuery } from "../../Redux/api/productAPI";
 import Loader from "../../Components/Loader";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../Redux/reducer/cartReducer";
+import { cartApi, useAddtocartMutation } from "../../Redux/api/cartAPI";
+import toast from "react-hot-toast";
 
 const ProductDetails = () => {
-  const navigate = useNavigate();
+  //  All state
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
   const [value, setValue] = useState<number>(0);
+  const [size, setSize] = useState<string>();
+  const [color, setColor] = useState<string>();
+  const [qty, setQty] = useState<number>(1);
+  const [loading, setloading] = useState(false);
+
+  // All configuration
   const params = useParams();
   const { id } = params;
-  const [qty, setQty] = useState<number>(1);
+  const dispatch = useDispatch();
+  const [AddtocartMutation] = useAddtocartMutation();
+  const isLoggedIn = localStorage.getItem("$#@!%") !== null;
+
+  // All functionality start here
 
   const handleChange = (newValue: number) => {
     setValue(newValue);
@@ -34,6 +47,34 @@ const ProductDetails = () => {
 
   const { data: product, isLoading, isError } = useGetProductsDetailsQuery(id);
   const data = product?.product;
+
+  // add to cart handle
+
+  const addtocart = async () => {
+    setloading(true);
+
+    try {
+      const res = await AddtocartMutation({
+        productId: id,
+        quantity: qty,
+        size: size,
+        color: color,
+      });
+      setloading(false);
+
+      if ("data" in res && isLoggedIn) {
+        dispatch(
+          addToCart({ productId: id, quantity: qty, size: size, color: color })
+        );
+
+        toast.success("Product add to cart successfully");
+      } else {
+        toast.error("Please login first");
+      }
+    } catch (error) {
+      toast.error("something went wrong please try again ");
+    }
+  };
 
   if (isLoading) {
     return <Loader />;
@@ -125,7 +166,13 @@ const ProductDetails = () => {
                 <div className="size-value">
                   {data.size ? (
                     data.size.map((item: string, index: number) => (
-                      <button key={index}>{item}</button>
+                      <button
+                        key={index}
+                        onClick={() => setSize(item)}
+                        className={size === item ? "bg-dark text-white" : ""}
+                      >
+                        {item}
+                      </button>
                     ))
                   ) : (
                     <p>Free Size</p>
@@ -139,6 +186,8 @@ const ProductDetails = () => {
                       <button
                         key={index}
                         style={{ backgroundColor: item }}
+                        onClick={() => setColor(item)}
+                        className={color === item ? "border-2" : ""}
                       ></button>
                     ))
                   ) : (
@@ -177,11 +226,10 @@ const ProductDetails = () => {
                 <div className="btn-group  row w-100 justify-content-center gap-5">
                   <button
                     className="add-to-cart col-md-5 d-flex justify-content-center align-items-center gap-2"
-                    onClick={() => {
-                      navigate("/checkout/cart");
-                    }}
+                    onClick={addtocart}
                   >
-                    ADD TO CART <FaShoppingCart />
+                    {loading ? "Adding product to cart ..." : "ADD TO CART"}{" "}
+                    <FaShoppingCart />
                   </button>
                   <button className="wish-list col-md-5 d-flex justify-content-center align-items-center gap-2">
                     WISH LIST <FaRegHeart />

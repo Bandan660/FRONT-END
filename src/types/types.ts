@@ -40,3 +40,10 @@ export interface Product {
   slug: string;
   ratings: Rating;
 }
+export interface Cart {
+  _id: string;
+  productId: string;
+  quantity: number;
+  color: string;
+  size: string;
+}

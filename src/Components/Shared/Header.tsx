@@ -3,6 +3,7 @@ import { FaSearch, FaShoppingBag, FaUser } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { decryptCode } from "../../util";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -14,6 +15,12 @@ const Header = () => {
   const trimmedRole = role.trim().replace(/\W/g, "");
 
   const navigate = useNavigate();
+  const cartItems = useSelector((state) => state.cart.items);
+  const totalQuantity = cartItems.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+  console.log(totalQuantity);
 
   const logoutHandler = () => {
     localStorage.removeItem("$I");
@@ -74,8 +81,14 @@ const Header = () => {
                 </button>
               </li>
               <li className="menu-item">
-                <button className="header-btn">
+                <button
+                  className="header-btn"
+                  onClick={() => navigate("checkout/cart")}
+                >
                   <FaShoppingBag />
+                  {totalQuantity > 0 && (
+                    <span className="badge">{totalQuantity}</span>
+                  )}
                 </button>
               </li>
               {id ? (

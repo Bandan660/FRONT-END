@@ -1,19 +1,13 @@
 import React, { Fragment, useState } from "react";
 import { FaMinus, FaPlus, FaTrashAlt } from "react-icons/fa";
 import CategoryCarousel from "../../Components/CategoryCarousel";
+import { useSelector } from "react-redux";
 
 const Cart = () => {
-  const [qty, setQty] = useState<number>(1);
-  const featuresData = {
-    productId: "17689",
-    name: "Boots",
-    price: 40000,
-    stock: 300,
-    size: "M",
-    photo:
-      "https://portotheme.com/html/porto_ecommerce/assets/images/demoes/demo3/products/product-1.jpg",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
-  };
+  // Fetching cart items from Redux store
+  const cartItems = useSelector((state) => state.cart.items);
+
+  const [qty, setQty] = useState<number>();
 
   return (
     <Fragment>
@@ -33,100 +27,54 @@ const Cart = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>
-                    <img src={featuresData.photo} alt={featuresData.name} />
-                  </td>
-                  <td>
-                    <p>{featuresData.name}</p>
-                    <p>{featuresData.description.substring(0, 30)}</p>
-                    <p>
-                      <span className="fw-bold bg-dark text-white p-1 rounded">
-                        Size: {featuresData.size}
-                      </span>
-                    </p>
-                  </td>
-                  <td>
-                    <div className=" d-flex justify-content-start align-items-center">
-                      <span className="input-group-btn input-group-prepend">
+                {cartItems.map((item, index) => (
+                  <tr key={index}>
+                    <td>
+                      {/* <img src={item.product.thumbnail} alt={item.product.title} /> */}
+                    </td>
+                    <td>
+                      {/* <p>{item.product.title}</p>
+                      <p>{item.product.description.substring(0, 30)}</p> */}
+                      <p>
+                        <span className="fw-bold bg-dark text-white p-1 rounded">
+                          Size: {item.size}
+                        </span>
+                      </p>
+                    </td>
+                    <td>
+                      <div className="d-flex justify-content-start align-items-center">
                         <button
                           className="btn btn-outline btn-down qty-btn"
                           type="button"
-                          onClick={() => qty > 1 && setQty(qty - 1)}
+                          onClick={() =>
+                            setQty(item.quantity > 1 ? item.quantity - 1 : 1)
+                          }
                         >
                           <FaMinus className="text-dark" />
                         </button>
-                      </span>
-                      <input
-                        className="horizontal-quantity "
-                        type="text"
-                        value={qty}
-                      />
-                      <span className="input-group-btn input-group-append">
+                        <input
+                          className="horizontal-quantity"
+                          type="text"
+                          value={item.quantity}
+                          readOnly
+                        />
                         <button
                           className="btn btn-outline qty-btn"
                           type="button"
-                        >
-                          <FaPlus
-                            className="text-dark"
-                            onClick={() => setQty(qty + 1)}
-                          />
-                        </button>
-                      </span>
-                    </div>
-                  </td>
-                  <td>{featuresData.price}</td>
-                  <td>
-                    <button className="btn btn-outline ">
-                      <FaTrashAlt className="text-dark" />
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src={featuresData.photo} alt={featuresData.name} />
-                  </td>
-                  <td>
-                    <p>{featuresData.name}</p>
-                    <p>{featuresData.description.substring(0, 30)}</p>
-                    <p>
-                      <span className="fw-bold bg-dark text-white p-1 rounded">
-                        Size: {featuresData.size}
-                      </span>
-                    </p>
-                  </td>
-                  <td>
-                    <div className=" d-flex justify-content-start align-items-center">
-                      <span className="input-group-btn input-group-prepend">
-                        <button
-                          className="btn btn-outline btn-down qty-btn"
-                          type="button"
-                        >
-                          <FaMinus className="text-dark" />
-                        </button>
-                      </span>
-                      <input
-                        className="horizontal-quantity "
-                        type="text"
-                        readOnly
-                      />
-                      <span className="input-group-btn input-group-append">
-                        <button
-                          className="btn btn-outline qty-btn"
-                          type="button"
+                          onClick={() => setQty(item.quantity + 1)}
                         >
                           <FaPlus className="text-dark" />
                         </button>
-                      </span>
-                    </div>
-                  </td>
-                  <td>{featuresData.price}</td>
-                  <td>
-                    <button className="btn btn-outline ">
-                      <FaTrashAlt className="text-dark" />
-                    </button>
-                  </td>
-                </tr>
+                      </div>
+                    </td>
+                    {/* <td>{item.product.price}</td> */}
+                    <td>
+                      <button className="btn btn-outline">
+                        <FaTrashAlt className="text-dark" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -136,7 +84,7 @@ const Cart = () => {
               <div className=" border border-secondary p-3">
                 <div className="d-flex justify-content-between">
                   <p>Subtotal</p>
-                  <p>{featuresData.price}</p>
+                  <p>{}</p>
                 </div>
                 <div className="d-flex justify-content-between">
                   <p>Shipping</p>
@@ -145,7 +93,7 @@ const Cart = () => {
                 <hr />
                 <div className="d-flex justify-content-between">
                   <p>Total</p>
-                  <p>{featuresData.price}</p>
+                  <p>{}</p>
                 </div>
                 <hr />
                 <button className="btn cart-btn">PROCEED TO CHECKOUT</button>
