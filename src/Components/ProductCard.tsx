@@ -25,12 +25,12 @@ const ProductCard = ({
   handler,
 }: ProductProps) => {
   const [value, setValue] = useState<number | null>(2);
-  const navigate = useNavigate()
-  console.log(category)
+  const navigate = useNavigate();
+  console.log(category);
 
   return (
     <Fragment>
-      <div className="productCard col-6 col-sm-4 col-md-3 col-xl-2 my-3 d-flex flex-column align-items-center"    >
+      <div className="productCard col-6 col-sm-4 col-md-3 col-xl-2 my-3 d-flex flex-column align-items-center">
         <div className="w-100 position-relative">
           <img
             src={photo}
@@ -48,7 +48,10 @@ const ProductCard = ({
             Add to Bag
           </button>
         </div>
-        <div className="product-details mt-3" onClick={() => navigate(`/product/${category}/${productId}`)}>
+        <div
+          className="product-details mt-3"
+          onClick={() => navigate(`/product/${category}/${productId}`)}
+        >
           <h3 className="productName">{name}</h3>
 
           <p className="productPrice">₹ {price}</p>

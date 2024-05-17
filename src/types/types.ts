@@ -46,4 +46,7 @@ export interface Cart {
   quantity: number;
   color: string;
   size: string;
+  price:number;
+  image: string;
+  title:string;
 }

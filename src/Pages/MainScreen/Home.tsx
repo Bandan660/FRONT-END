@@ -48,7 +48,7 @@ const Home = () => {
           Shop By Category
         </h2>
 
-        <div >
+        <div>
           <CategoryCarousel />
         </div>
       </section>
@@ -59,6 +59,7 @@ const Home = () => {
         <div className="container">
           <div className="row p-2">
             {isLoading && <Skeleton />}
+            {isError && <p>Something went wrong</p>}
             {data &&
               data.map((product: Product) => (
                 <ProductCard

@@ -11,6 +11,6 @@ export type LoginResponce = {
 };
 export type ProductResponce={
   message: string;
-  product: Product;
+  product: Product[];
  
 }

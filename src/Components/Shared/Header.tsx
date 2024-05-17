@@ -15,12 +15,12 @@ const Header = () => {
   const trimmedRole = role.trim().replace(/\W/g, "");
 
   const navigate = useNavigate();
-  const cartItems = useSelector((state) => state.cart.items);
-  const totalQuantity = cartItems.reduce(
-    (total, item) => total + item.quantity,
-    0
-  );
-  console.log(totalQuantity);
+  // const cartItems = useSelector((state) => state.cart.items);
+  // const totalQuantity = cartItems.reduce(
+  //   (total, item) => total + item.quantity,
+  //   0
+  // );
+  // console.log(totalQuantity);
 
   const logoutHandler = () => {
     localStorage.removeItem("$I");
@@ -86,9 +86,9 @@ const Header = () => {
                   onClick={() => navigate("checkout/cart")}
                 >
                   <FaShoppingBag />
-                  {totalQuantity > 0 && (
+                  {/* {totalQuantity > 0 && (
                     <span className="badge">{totalQuantity}</span>
-                  )}
+                  )} */}
                 </button>
               </li>
               {id ? (

@@ -1,13 +1,35 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { FaMinus, FaPlus, FaTrashAlt } from "react-icons/fa";
 import CategoryCarousel from "../../Components/CategoryCarousel";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@reduxjs/toolkit/query";
+import { addToCart, removeTocartitem } from "../../Redux/reducer/cartReducer"; // corrected function name
+import { Cart } from "../../types/types";
 
-const Cart = () => {
+type cartItemProps = {
+  cartItem: any;
+  incrementhandler: (cartItem: Cart) => void;
+  decrementhandler: (cartItem: Cart) => void;
+  removehandler: (id: string) => void;
+};
+
+const Cartpage = () => {
   // Fetching cart items from Redux store
-  const cartItems = useSelector((state) => state.cart.items);
+  const { cartItems } = useSelector((state: RootState) => state.cart);
+  console.log(cartItems)
+  const dispatch = useDispatch();
 
-  const [qty, setQty] = useState<number>();
+  const incrementhandler = (cartItem: Cart) => {
+    dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity + 1 }));
+  };
+  const decrementhandler = (cartItem: Cart) => {
+    dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity - 1 }));
+  };
+  const removehandler = (productId: string) => {
+    alert("hello")
+    dispatch(removeTocartitem(productId)); // corrected function name
+  };
+
 
   return (
     <Fragment>
@@ -15,7 +37,6 @@ const Cart = () => {
         <div className="cart row">
           <div className="col-md-8 col-sm-12">
             <h5 className="text-uppercase my-5">Shopping Cart</h5>
-
             <table className="table w-100">
               <thead>
                 <tr>
@@ -30,14 +51,17 @@ const Cart = () => {
                 {cartItems.map((item, index) => (
                   <tr key={index}>
                     <td>
-                      {/* <img src={item.product.thumbnail} alt={item.product.title} /> */}
+                      <img src={item.image} alt={item.title} />
                     </td>
                     <td>
-                      {/* <p>{item.product.title}</p>
-                      <p>{item.product.description.substring(0, 30)}</p> */}
+                      <p>{item.title}</p>
                       <p>
                         <span className="fw-bold bg-dark text-white p-1 rounded">
                           Size: {item.size}
+                        </span>
+                        <br />
+                        <span className="fw-bold bg-dark text-white p-1 rounded mt-2">
+                          Color: {item.color} {/* corrected typo here */}
                         </span>
                       </p>
                     </td>
@@ -46,30 +70,24 @@ const Cart = () => {
                         <button
                           className="btn btn-outline btn-down qty-btn"
                           type="button"
-                          onClick={() =>
-                            setQty(item.quantity > 1 ? item.quantity - 1 : 1)
-                          }
+                          onClick={() => decrementhandler(item)} /* corrected here */
+                          disabled={item.quantity === 1} /* disable when quantity is 1 */
                         >
                           <FaMinus className="text-dark" />
                         </button>
-                        <input
-                          className="horizontal-quantity"
-                          type="text"
-                          value={item.quantity}
-                          readOnly
-                        />
+                        <p>{item.quantity}</p>
                         <button
                           className="btn btn-outline qty-btn"
                           type="button"
-                          onClick={() => setQty(item.quantity + 1)}
+                          onClick={() => incrementhandler(item)} /* corrected here */
                         >
                           <FaPlus className="text-dark" />
                         </button>
                       </div>
                     </td>
-                    {/* <td>{item.product.price}</td> */}
+                    <td>{item.price}</td>
                     <td>
-                      <button className="btn btn-outline">
+                      <button className="btn btn-outline" onClick={() => removehandler(item.productId)}> {/* added onClick handler */}
                         <FaTrashAlt className="text-dark" />
                       </button>
                     </td>
@@ -84,7 +102,7 @@ const Cart = () => {
               <div className=" border border-secondary p-3">
                 <div className="d-flex justify-content-between">
                   <p>Subtotal</p>
-                  <p>{}</p>
+                  <p>{cartItems.reduce((total, item) => total + item.quantity * item.price, 0)}</p> {/* calculate subtotal */}
                 </div>
                 <div className="d-flex justify-content-between">
                   <p>Shipping</p>
@@ -93,7 +111,7 @@ const Cart = () => {
                 <hr />
                 <div className="d-flex justify-content-between">
                   <p>Total</p>
-                  <p>{}</p>
+                  <p>{cartItems.reduce((total, item) => total + item.quantity * item.price, 0)}</p> {/* same as subtotal */}
                 </div>
                 <hr />
                 <button className="btn cart-btn">PROCEED TO CHECKOUT</button>
@@ -112,4 +130,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default Cartpage;

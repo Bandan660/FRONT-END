@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Swiper, SwiperClass, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -30,6 +30,9 @@ const ProductDetails = () => {
   const [size, setSize] = useState<string>();
   const [color, setColor] = useState<string>();
   const [qty, setQty] = useState<number>(1);
+  const [image, setImage] = useState<string>();
+  const [title, setTitle] = useState<string>();
+  const [price, setPrice] = useState<number>();
   const [loading, setloading] = useState(false);
 
   // All configuration
@@ -59,12 +62,23 @@ const ProductDetails = () => {
         quantity: qty,
         size: size,
         color: color,
+        image,
+        title,
+        price,
       });
       setloading(false);
 
       if ("data" in res && isLoggedIn) {
         dispatch(
-          addToCart({ productId: id, quantity: qty, size: size, color: color })
+          addToCart({
+            productId: id ?? "",
+            quantity: qty,
+            size: size ?? "",
+            color: color ?? "",
+            image:image ?? "",
+            title:title ?? "",
+            price,
+          })
         );
 
         toast.success("Product add to cart successfully");
@@ -72,9 +86,18 @@ const ProductDetails = () => {
         toast.error("Please login first");
       }
     } catch (error) {
-      toast.error("something went wrong please try again ");
+     console.log(error);
+     
     }
   };
+
+  useEffect(() => {
+    if (data) {
+      setImage(data.thumbnail); // Assuming images is an array, set the first image
+      setTitle(data.title);
+      setPrice(data.price);
+    }
+  }, [data]);
 
   if (isLoading) {
     return <Loader />;

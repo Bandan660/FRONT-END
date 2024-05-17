@@ -72,6 +72,7 @@
     }
     img {
       width: 100%;
+      height: 350px;
     }
     .product-details {
       display: flex;
@@ -84,8 +85,8 @@
         font-family: "Poppins", sans-serif;
       }
       .productDescription {
-        font-size: .9rem;
-        color:#777
+        font-size: 0.9rem;
+        color: #777;
       }
       .custom-rating {
         color: #222529;
@@ -139,11 +140,11 @@
   .features-box {
     img {
       width: 50px;
-      height:50px;
+      height: 50px;
     }
-  .features-description{
-    color:#7b858a;
-    font-size: .9rem;
-  }
+    .features-description {
+      color: #7b858a;
+      font-size: 0.9rem;
+    }
   }
 }

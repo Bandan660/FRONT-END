@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { ProductResponce } from "../../types/api_types";
 
 const server = import.meta.env.VITE_SERVER;
 
@@ -6,7 +7,7 @@ export const productApi = createApi({
   reducerPath: "productApi",
   baseQuery: fetchBaseQuery({ baseUrl: `${server}/api/product` }),
   endpoints: (builder) => ({
-    getProducts: builder.query({
+    getProducts: builder.query<ProductResponce,string>({
       query: () => ({
         url: "all",
         method: "GET",

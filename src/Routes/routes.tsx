@@ -3,6 +3,8 @@ import { Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useUserdetailsQuery } from "../Redux/api/userAPI";
 import { decryptCode } from "../util";
+import ProtectedRoute from "../Components/ProctedRoute";
+import AllProduct from "../Pages/MainScreen/AllProduct";
 
 // importing routes for main
 const Home = lazy(() => import("../Pages/MainScreen/Home"));
@@ -36,55 +38,62 @@ const Routing = () => {
   const id = decryptCode({ token: userid }).trim().replace(/\W/g, "");
 
   const userdetails = useUserdetailsQuery(id);
-  console.log(userdetails);
+  const role = userdetails.data && userdetails.data.user && userdetails.data.user.role ? userdetails.data.user.role : null;
+  console.log(role)
 
   return (
     <Fragment>
       <div className="container">
-
-    
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/product/:id/:id" element={<ProductDetails />} />
-        <Route path="/checkout/cart" element={<Cart />} />
-        <Route path="/login" element={<LoginForm />} />
-        <Route path="/register" element={<RegisterForm />} />
-        {/* define routes for admin */}
-        <Route
-        // element={
-        //   <ProtectedRoute
-        //     isAuthenticated={true}
-        //     adminRoute={true}
-        //     isAdmin={true}
-        //   />
-        // }
-        >
-          <Route path="/admin/dashboard" element={<Dashboard />} />
-          <Route path="/admin/product" element={<Products />} />
-          <Route path="/admin/customer" element={<Customers />} />
-          <Route path="/admin/transaction" element={<Transaction />} />
-          {/* Charts */}
-          <Route path="/admin/chart/bar" element={<Barcharts />} />
-          <Route path="/admin/chart/pie" element={<Piecharts />} />
-          <Route path="/admin/chart/line" element={<Linecharts />} />
-          {/* Apps */}
-          <Route path="/admin/app/coupon" element={<Coupon />} />
-          <Route path="/admin/app/stopwatch" element={<Stopwatch />} />
-          <Route path="/admin/app/toss" element={<Toss />} />
-
-          {/* Management */}
-          <Route path="/admin/product/new" element={<NewProduct />} />
-
-          <Route path="/admin/product/:id" element={<ProductManagement />} />
-
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/product/:id/:id" element={<ProductDetails />} />
+          <Route path="/checkout/cart" element={<Cart />} />
+          <Route path="/allproduct" element={<AllProduct/>}/>
           <Route
-            path="/admin/transaction/:id"
-            element={<TransactionManagement />}
+            path="/login"
+            element={
+              <ProtectedRoute isAuthnticated={userid ? false : true}>
+                <LoginForm />
+              </ProtectedRoute>
+            }
           />
-        </Route>
-        ;
-      </Routes>
+          <Route path="/register" element={<RegisterForm />} />
+          {/* define routes for admin */}
+          <Route
+            element={
+              <ProtectedRoute
+                isAuthnticated={true}
+                adminRoute={true}
+                isAdmin={role === "admin" ? true : false}
+              />
+            }
+          >
+            <Route path="/admin/dashboard" element={<Dashboard />} />
+            <Route path="/admin/product" element={<Products />} />
+            <Route path="/admin/customer" element={<Customers />} />
+            <Route path="/admin/transaction" element={<Transaction />} />
+            {/* Charts */}
+            <Route path="/admin/chart/bar" element={<Barcharts />} />
+            <Route path="/admin/chart/pie" element={<Piecharts />} />
+            <Route path="/admin/chart/line" element={<Linecharts />} />
+            {/* Apps */}
+            <Route path="/admin/app/coupon" element={<Coupon />} />
+            <Route path="/admin/app/stopwatch" element={<Stopwatch />} />
+            <Route path="/admin/app/toss" element={<Toss />} />
+
+            {/* Management */}
+            <Route path="/admin/product/new" element={<NewProduct />} />
+
+            <Route path="/admin/product/:id" element={<ProductManagement />} />
+
+            <Route
+              path="/admin/transaction/:id"
+              element={<TransactionManagement />}
+            />
+          </Route>
+          ;
+        </Routes>
       </div>
       <Toaster position="top-center" />
     </Fragment>
