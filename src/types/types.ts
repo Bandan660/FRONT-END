@@ -15,7 +15,7 @@ export interface Token {
   token: string;
 }
 
-export interface category {
+export interface Category {
   _id: string;
   title: string;
   image: string;
