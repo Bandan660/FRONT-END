@@ -64,6 +64,7 @@ ul {
 @import "front-end-styles/cart";
 @import "front-end-styles/login";
 @import "front-end-styles/allproduct";
+@import "front-end-styles/shipping";
 
 .admin-container {
   @include grid(1fr 4fr, 2rem);

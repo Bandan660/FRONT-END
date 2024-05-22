@@ -46,7 +46,20 @@ export interface Cart {
   quantity: number;
   color: string;
   size: string;
-  price:number;
+  price: number;
   image: string;
-  title:string;
+  title: string;
+}
+
+export interface Address {
+  Id:string,
+  firstname: string;
+  lastname: string;
+  email: string;
+  phone: number;
+  address: string;
+  city: string;
+  state: string;
+  country: string;
+  zip: number;
 }

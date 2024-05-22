@@ -5,19 +5,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@reduxjs/toolkit/query";
 import { addToCart, removeTocartitem } from "../../Redux/reducer/cartReducer"; // corrected function name
 import { Cart } from "../../types/types";
-
-type cartItemProps = {
-  cartItem: any;
-  incrementhandler: (cartItem: Cart) => void;
-  decrementhandler: (cartItem: Cart) => void;
-  removehandler: (id: string) => void;
-};
+import { useNavigate } from "react-router-dom";
 
 const Cartpage = () => {
   // Fetching cart items from Redux store
   const { cartItems } = useSelector((state: RootState) => state.cart);
-  console.log(cartItems)
+  console.log(cartItems);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const incrementhandler = (cartItem: Cart) => {
     dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity + 1 }));
@@ -26,10 +21,9 @@ const Cartpage = () => {
     dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity - 1 }));
   };
   const removehandler = (productId: string) => {
-    alert("hello")
+    alert("hello");
     dispatch(removeTocartitem(productId)); // corrected function name
   };
-
 
   return (
     <Fragment>
@@ -70,8 +64,12 @@ const Cartpage = () => {
                         <button
                           className="btn btn-outline btn-down qty-btn"
                           type="button"
-                          onClick={() => decrementhandler(item)} /* corrected here */
-                          disabled={item.quantity === 1} /* disable when quantity is 1 */
+                          onClick={() =>
+                            decrementhandler(item)
+                          } /* corrected here */
+                          disabled={
+                            item.quantity === 1
+                          } /* disable when quantity is 1 */
                         >
                           <FaMinus className="text-dark" />
                         </button>
@@ -79,7 +77,9 @@ const Cartpage = () => {
                         <button
                           className="btn btn-outline qty-btn"
                           type="button"
-                          onClick={() => incrementhandler(item)} /* corrected here */
+                          onClick={() =>
+                            incrementhandler(item)
+                          } /* corrected here */
                         >
                           <FaPlus className="text-dark" />
                         </button>
@@ -87,7 +87,12 @@ const Cartpage = () => {
                     </td>
                     <td>{item.price}</td>
                     <td>
-                      <button className="btn btn-outline" onClick={() => removehandler(item.productId)}> {/* added onClick handler */}
+                      <button
+                        className="btn btn-outline"
+                        onClick={() => removehandler(item.productId)}
+                      >
+                        {" "}
+                        {/* added onClick handler */}
                         <FaTrashAlt className="text-dark" />
                       </button>
                     </td>
@@ -102,7 +107,13 @@ const Cartpage = () => {
               <div className=" border border-secondary p-3">
                 <div className="d-flex justify-content-between">
                   <p>Subtotal</p>
-                  <p>{cartItems.reduce((total, item) => total + item.quantity * item.price, 0)}</p> {/* calculate subtotal */}
+                  <p>
+                    {cartItems.reduce(
+                      (total, item) => total + item.quantity * item.price,
+                      0
+                    )}
+                  </p>
+                  {/* calculate subtotal */}
                 </div>
                 <div className="d-flex justify-content-between">
                   <p>Shipping</p>
@@ -111,10 +122,21 @@ const Cartpage = () => {
                 <hr />
                 <div className="d-flex justify-content-between">
                   <p>Total</p>
-                  <p>{cartItems.reduce((total, item) => total + item.quantity * item.price, 0)}</p> {/* same as subtotal */}
+                  <p>
+                    {cartItems.reduce(
+                      (total, item) => total + item.quantity * item.price,
+                      0
+                    )}
+                  </p>{" "}
+                  {/* same as subtotal */}
                 </div>
                 <hr />
-                <button className="btn cart-btn">PROCEED TO CHECKOUT</button>
+                <button
+                  className="btn cart-btn"
+                  onClick={() => navigate("/product/shippinginfo")}
+                >
+                  PROCEED TO CHECKOUT
+                </button>
               </div>
             </div>
           </div>

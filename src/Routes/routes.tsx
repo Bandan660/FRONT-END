@@ -5,6 +5,7 @@ import { useUserdetailsQuery } from "../Redux/api/userAPI";
 import { decryptCode } from "../util";
 import ProtectedRoute from "../Components/ProctedRoute";
 import AllProduct from "../Pages/MainScreen/AllProduct";
+import Shipping from "../Pages/MainScreen/Shipping";
 
 // importing routes for main
 const Home = lazy(() => import("../Pages/MainScreen/Home"));
@@ -38,8 +39,10 @@ const Routing = () => {
   const id = decryptCode({ token: userid }).trim().replace(/\W/g, "");
 
   const userdetails = useUserdetailsQuery(id);
-  const role = userdetails.data && userdetails.data.user && userdetails.data.user.role ? userdetails.data.user.role : null;
-  console.log(role)
+  const role =
+    userdetails.data && userdetails.data.user && userdetails.data.user.role
+      ? userdetails.data.user.role
+      : null;
 
   return (
     <Fragment>
@@ -49,7 +52,15 @@ const Routing = () => {
           <Route path="/shop" element={<Shop />} />
           <Route path="/product/:id/:id" element={<ProductDetails />} />
           <Route path="/checkout/cart" element={<Cart />} />
-          <Route path="/allproduct" element={<AllProduct/>}/>
+          <Route path="/allproduct" element={<AllProduct />} />
+          <Route
+            path="/product/shippinginfo"
+            element={
+              <ProtectedRoute isAuthnticated={userid ? true : false}>
+                <Shipping />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/login"
             element={
