@@ -21,6 +21,7 @@ import Loader from "../../../Components/Loader";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../Redux/reducer/cartReducer";
 import { cartApi, useAddtocartMutation } from "../../../Redux/api/cartAPI";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const ProductDetails = () => {
@@ -34,6 +35,8 @@ const ProductDetails = () => {
   const [title, setTitle] = useState<string>();
   const [price, setPrice] = useState<number>();
   const [loading, setloading] = useState(false);
+
+  const navigate = useNavigate();
 
   // All configuration
   const params = useParams();
@@ -75,19 +78,19 @@ const ProductDetails = () => {
             quantity: qty,
             size: size ?? "",
             color: color ?? "",
-            image:image ?? "",
-            title:title ?? "",
+            image: image ?? "",
+            title: title ?? "",
             price,
           })
         );
 
         toast.success("Product add to cart successfully");
+        navigate("/checkout/cart");
       } else {
         toast.error("Please login first");
       }
     } catch (error) {
-     console.log(error);
-     
+      console.log(error);
     }
   };
 
@@ -251,7 +254,15 @@ const ProductDetails = () => {
                     className="add-to-cart col-md-5 d-flex justify-content-center align-items-center gap-2"
                     onClick={addtocart}
                   >
-                    {loading ? "Adding product to cart ..." : "ADD TO CART"}{" "}
+                    {loading ? (
+                      <span
+                        className="spinner-border spinner-border-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                    ) : (
+                      "ADD TO CART"
+                    )}
                     <FaShoppingCart />
                   </button>
                   <button className="wish-list col-md-5 d-flex justify-content-center align-items-center gap-2">

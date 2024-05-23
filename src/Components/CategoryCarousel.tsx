@@ -32,26 +32,17 @@ const CategoryCarousel = () => {
           spaceBetween={10}
           navigation={true}
           slidesPerView={4}
-        
           modules={[FreeMode, Navigation, Thumbs]}
-       
         >
-
           {data &&
             Array.isArray(data.categories) &&
             data.categories.map((category: category) => (
-              <SwiperSlide key={category._id} >
-                {isLoading ? (
-                  <>
-                    <Skeleton variant="rectangular" width={400} height={300} />
-                  </>
-                ) : (
-                  <>
-                    <Link to={`/category/${category.title}`}>
-                      <img src={category.image} alt={category.title} />
-                    </Link>
-                  </>
-                )}
+              <SwiperSlide key={category._id}>
+                <>
+                  <Link to={`/category/${category.title}`}>
+                    <img src={category.image} alt={category.title} />
+                  </Link>
+                </>
 
                 <h5 className="category-name">{category.title}</h5>
               </SwiperSlide>

@@ -58,7 +58,7 @@ const Home = () => {
         </h2>
         <div className="container">
           <div className="row p-2">
-            {isLoading && <Skeleton />}
+            {isLoading && <Skeleton height={500} />}
             {isError && <p>Something went wrong</p>}
             {data &&
               data.map((product: Product) => (

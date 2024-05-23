@@ -25,6 +25,16 @@
         .badge{
           background: black;
           color:white;
+          width: 20px;
+          height: 20px;
+          font-size: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          position: absolute;
+          top:1px;
+          right:-9px;
         }
       }
       .sub-menu-category {

@@ -31,11 +31,14 @@ const ProductCard = ({
     <Fragment>
       <div className="productCard col-6 col-sm-4 col-md-3 col-xl-2 my-3 d-flex flex-column align-items-center">
         <div className="w-100 position-relative">
-          <img
-            src={photo}
-            alt={name}
-            className="productImg position-relative"
-          />
+          <div className="img-fluid">
+            <img
+              src={photo}
+              alt={name}
+              className="productImg position-relative"
+            />
+          </div>
+
           <button className="position-absolute top-0 wish-list">
             <FaRegHeart />
           </button>

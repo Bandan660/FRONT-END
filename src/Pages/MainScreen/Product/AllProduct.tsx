@@ -5,6 +5,7 @@ import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { Product, Category } from "../../../Types/types";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../../Components/Loader";
 
 const AllProduct: React.FC = () => {
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ const AllProduct: React.FC = () => {
   };
 
   if (categoryLoading || productLoading) {
-    return <div>Loading...</div>;
+    return <div><Loader/></div>;
   }
 
   return (

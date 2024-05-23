@@ -16,6 +16,7 @@ import CryptoJS from "crypto-js";
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   const [login] = useLoginMutation();
@@ -40,6 +41,7 @@ const LoginForm: React.FC = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     e.preventDefault();
     try {
       const res = await login({
@@ -70,9 +72,11 @@ const LoginForm: React.FC = () => {
         const error = res.error as FetchBaseQueryError;
         const message = error.data as LoginResponce;
         toast.error(message.message);
+        setLoading(false);
       }
     } catch (error) {
       toast.error("Login failed. Please try again later.");
+      setLoading(false);
     }
   };
 
@@ -110,7 +114,15 @@ const LoginForm: React.FC = () => {
             <Link to="/register">Sign Up</Link>
           </div>
           <button type="submit" className="login w-25">
-            Login
+            {loading ? (
+              <span
+                className="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+            ) : (
+              "Login"
+            )}
           </button>
         </form>
         <button className="login w-25 login mt-3" onClick={handlewithGoogle}>
