@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment,useEffect } from "react";
 import { FaMinus, FaPlus, FaTrashAlt } from "react-icons/fa";
 import CategoryCarousel from "../../Components/CategoryCarousel";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,23 +7,32 @@ import { addToCart, removeTocartitem } from "../../Redux/reducer/cartReducer"; /
 import { Cart } from "../../types/types";
 import { useNavigate } from "react-router-dom";
 
+
 const Cartpage = () => {
-  // Fetching cart items from Redux store
-  const { cartItems } = useSelector((state: RootState) => state.cart);
-  console.log(cartItems);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate=useNavigate()
+  const { cartItems, loading } = useSelector((state: RootState) => state.cart);
+
+  useEffect(() => {
+  }, [cartItems]);
 
   const incrementhandler = (cartItem: Cart) => {
     dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity + 1 }));
   };
+
   const decrementhandler = (cartItem: Cart) => {
-    dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity - 1 }));
+    if (cartItem.quantity > 1) {
+      dispatch(addToCart({ ...cartItem, quantity: cartItem.quantity - 1 }));
+    }
   };
+
   const removehandler = (productId: string) => {
-    alert("hello");
-    dispatch(removeTocartitem(productId)); // corrected function name
+    dispatch(removeTocartitem(productId));
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Fragment>
