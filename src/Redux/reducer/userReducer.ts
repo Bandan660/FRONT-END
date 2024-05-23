@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { LoginState } from "../../types/reducer_types";
-import { User } from "../../types/types";
+import { LoginState } from "../../Types/reducer_types";
+import { User } from "../../Types/types";
 
 const initialState: LoginState = {
   isLoading: false,

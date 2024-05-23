@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { cartReducerinitialState } from "../../types/reducer_types";
-import { Cart } from "../../types/types";
+import { cartReducerinitialState } from "../../Types/reducer_types";
+import { Cart } from "../../Types/types";
 import toast from "react-hot-toast";
 
 

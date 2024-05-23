@@ -3,12 +3,12 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { auth } from "../../firebase";
+import { auth } from "../../Utils/firebase";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { useLoginMutation } from "../../Redux/api/userAPI";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { LoginResponce } from "../../types/api_types";
+import { LoginResponce } from "../../Types/api_types";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../Redux/reducer/userReducer";
 import CryptoJS from "crypto-js";

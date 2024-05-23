@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import { FaSearch, FaShoppingBag, FaUser } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import { decryptCode } from "../../util";
+import { decryptCode } from "../../Utils/util";
 import { useSelector } from "react-redux";
 
 const Header = () => {

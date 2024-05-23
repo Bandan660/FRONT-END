@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ProductResponce } from "../../types/api_types";
+import { ProductResponce } from "../../Types/api_types";
 
 const server = import.meta.env.VITE_SERVER;
 

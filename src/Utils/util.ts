@@ -1,5 +1,5 @@
 import CryptoJS from "crypto-js";
-import { Token } from "./types/types";
+import { Token } from "../Types/types";
 const secretekey = import.meta.env.VITE_SECRETETOKEN;
 
 export const decryptCode = ({token}: Token) => {

@@ -3,7 +3,7 @@ import Carousel from "react-bootstrap/Carousel";
 import CategoryCarousel from "../../Components/CategoryCarousel";
 import ProductCard from "../../Components/ProductCard";
 import { useGetProductsQuery } from "../../Redux/api/productAPI";
-import { Product } from "../../types/types";
+import { Product } from "../../Types/types";
 import { Skeleton } from "@mui/material";
 
 const Home = () => {

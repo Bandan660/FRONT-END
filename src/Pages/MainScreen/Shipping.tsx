@@ -7,9 +7,10 @@ import {
 } from "../../Redux/api/addressAPI";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import toast from "react-hot-toast";
-import { AddressResponse } from "../../types/api_types";
+import { AddressResponse } from "../../Types/api_types";
 import { CircularProgress } from "@mui/material";
-import { decryptCode } from "../../util";
+import { decryptCode } from "../../Utils/util";
+import { FaPen, FaTrash } from "react-icons/fa";
 
 interface FormValues {
   firstname: string;
@@ -126,6 +127,8 @@ const Shipping = () => {
                   <div className="col-md-3">
                     <div className="card">
                       <div className="card-body">
+                        <button className="btn btn-dark position-absolute end-0 mx-3"><FaPen/></button>
+                        <button className="btn btn-dark position-absolute end-0 my-5 mx-3"><FaTrash/></button>
                         <p className="card-title">
                           Full Name : {data.firstname} {data.lastname}
                         </p>

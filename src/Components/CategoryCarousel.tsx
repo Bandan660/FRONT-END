@@ -3,7 +3,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { Link } from "react-router-dom";
 import { useGetcategoryQuery } from "../Redux/api/categoryAPI";
-import { category } from "../types/types";
+import { category } from "../Types/types";
 import Skeleton from "@mui/material/Skeleton";
 
 import { Swiper, SwiperClass, SwiperSlide } from "swiper/react";

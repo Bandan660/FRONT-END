@@ -1,9 +1,9 @@
 import React, { ChangeEvent, Fragment, useState, useEffect } from "react";
-import { useGetcategoryQuery } from "../../Redux/api/categoryAPI";
-import { useGetProductsQuery } from "../../Redux/api/productAPI";
+import { useGetcategoryQuery } from "../../../Redux/api/categoryAPI";
+import { useGetProductsQuery } from "../../../Redux/api/productAPI";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-import { Product, Category } from "../../types/types";
+import { Product, Category } from "../../../Types/types";
 import { useNavigate } from "react-router-dom";
 
 const AllProduct: React.FC = () => {

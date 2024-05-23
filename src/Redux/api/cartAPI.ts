@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { decryptCode } from "../../util";
+import { decryptCode } from "../../Utils/util";
 
 const server = import.meta.env.VITE_SERVER;
 const usertoken = localStorage.getItem("$#@!%") || "";

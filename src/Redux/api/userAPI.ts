@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { MessageResponce } from "../../types/api_types";
-import { User, UserLogin } from "../../types/types";
-import { decryptCode } from "../../util";
+import { MessageResponce } from "../../Types/api_types";
+import { User, UserLogin } from "../../Types/types";
+import { decryptCode } from "../../Utils/util";
 
 const server = import.meta.env.VITE_SERVER;
 const usertoken = localStorage.getItem("$#@!%") || "";

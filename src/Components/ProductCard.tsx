@@ -26,7 +26,6 @@ const ProductCard = ({
 }: ProductProps) => {
   const [value, setValue] = useState<number | null>(2);
   const navigate = useNavigate();
-  console.log(category);
 
   return (
     <Fragment>

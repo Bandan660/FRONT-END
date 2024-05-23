@@ -1,10 +1,10 @@
 import React, { Fragment,useEffect } from "react";
 import { FaMinus, FaPlus, FaTrashAlt } from "react-icons/fa";
-import CategoryCarousel from "../../Components/CategoryCarousel";
+import CategoryCarousel from "../../../Components/CategoryCarousel";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@reduxjs/toolkit/query";
-import { addToCart, removeTocartitem } from "../../Redux/reducer/cartReducer"; // corrected function name
-import { Cart } from "../../types/types";
+import { addToCart, removeTocartitem } from "../../../Redux/reducer/cartReducer"; // corrected function name
+import { Cart } from "../../../Types/types";
 import { useNavigate } from "react-router-dom";
 
 

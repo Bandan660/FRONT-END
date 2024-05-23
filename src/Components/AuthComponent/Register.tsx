@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../../Redux/api/userAPI";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { MessageResponce } from "../../types/api_types";
+import { MessageResponce } from "../../Types/api_types";
 
 const RegisterForm: React.FC = () => {
   const [formData, setFormData] = useState({

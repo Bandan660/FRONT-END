@@ -2,16 +2,15 @@ import React, { Fragment, lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useUserdetailsQuery } from "../Redux/api/userAPI";
-import { decryptCode } from "../util";
-import ProtectedRoute from "../Components/ProctedRoute";
-import AllProduct from "../Pages/MainScreen/AllProduct";
-import Shipping from "../Pages/MainScreen/Shipping";
+import { decryptCode } from "../Utils/util";
+import ProtectedRoute from "./ProctedRoutes/ProctedRoute";
+import AllProduct from "../Pages/MainScreen/Product/AllProduct";
+import Shipping from "../Pages/MainScreen/Cart/Shipping";
 
 // importing routes for main
 const Home = lazy(() => import("../Pages/MainScreen/Home"));
-const Shop = lazy(() => import("../Pages/MainScreen/Shop"));
-const ProductDetails = lazy(() => import("../Pages/MainScreen/ProductDetails"));
-const Cart = lazy(() => import("../Pages/MainScreen/Cart"));
+const ProductDetails = lazy(() => import("../Pages/MainScreen/Product/ProductDetails"));
+const Cart = lazy(() => import("../Pages/MainScreen/Cart/Cart"));
 const LoginForm = lazy(() => import("../Components/AuthComponent/Login"));
 const RegisterForm = lazy(() => import("../Components/AuthComponent/Register"));
 
@@ -49,7 +48,6 @@ const Routing = () => {
       <div className="container">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/shop" element={<Shop />} />
           <Route path="/product/:id/:id" element={<ProductDetails />} />
           <Route path="/checkout/cart" element={<Cart />} />
           <Route path="/allproduct" element={<AllProduct />} />

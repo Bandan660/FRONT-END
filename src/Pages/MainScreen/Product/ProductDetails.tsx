@@ -15,12 +15,12 @@ import {
   FaShoppingCart,
   FaStar,
 } from "react-icons/fa";
-import CategoryCarousel from "../../Components/CategoryCarousel";
-import { useGetProductsDetailsQuery } from "../../Redux/api/productAPI";
-import Loader from "../../Components/Loader";
+import CategoryCarousel from "../../../Components/CategoryCarousel";
+import { useGetProductsDetailsQuery } from "../../../Redux/api/productAPI";
+import Loader from "../../../Components/Loader";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../Redux/reducer/cartReducer";
-import { cartApi, useAddtocartMutation } from "../../Redux/api/cartAPI";
+import { addToCart } from "../../../Redux/reducer/cartReducer";
+import { cartApi, useAddtocartMutation } from "../../../Redux/api/cartAPI";
 import toast from "react-hot-toast";
 
 const ProductDetails = () => {
