@@ -27,7 +27,10 @@ export const addressApi = createApi({
       }),
     }),
 
-    editAddress: builder.mutation< Address,{ data: AddressFormValues; id: string }>({
+    editAddress: builder.mutation<
+      Address,
+      { data: AddressFormValues; id: string }
+    >({
       query: ({ data, id }) => ({
         url: `editAddress/${id}`,
         method: "PUT",
@@ -53,6 +56,16 @@ export const addressApi = createApi({
         },
       }),
     }),
+
+    deleteAddress: builder.mutation<Address, { id: string }>({
+      query: ({ id }) => ({
+        url: `deleteAddress/${id}`,
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      }),
+    }),
   }),
 });
 
@@ -61,4 +74,5 @@ export const {
   useGetAddressQuery,
   useGetAddressByidQuery,
   useEditAddressMutation,
+  useDeleteAddressMutation,
 } = addressApi;

@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import {
   useCreateAddressMutation,
+  useDeleteAddressMutation,
   useGetAddressQuery,
 } from "../../../Redux/api/addressAPI";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
@@ -48,6 +49,7 @@ const validationSchema = Yup.object().shape({
 
 const Shipping = () => {
   const [Address] = useCreateAddressMutation();
+  const [deleteAddress]=useDeleteAddressMutation()
   const [isloading, setloading] = useState(false);
   const navigate = useNavigate();
 
@@ -55,7 +57,7 @@ const Shipping = () => {
   const userid = localStorage.getItem("$I") || "";
   const id = decryptCode({ token: userid }).trim().replace(/\W/g, "");
 
-  const { data, isLoading, isError } = useGetAddressQuery(id);
+  const { data, isLoading, isError ,refetch} = useGetAddressQuery(id);
   const alladdress = data?.address || [];
 
   //handle form submit for creating address
@@ -96,6 +98,7 @@ const Shipping = () => {
 
         toast.success("Address added successfully");
         resetForm();
+        window.location.reload()
       } else {
         setloading(false);
 
@@ -108,8 +111,26 @@ const Shipping = () => {
     }
   };
 
-  if (isLoading) return <Loader/>;
-  
+  // handle delete address
+  const handleDelete = async (id: string) => {
+    try {
+      const res = await deleteAddress({ id: id });
+      if ("data" in res) {
+        toast.success("Address deleted successfully");
+        refetch();
+
+    
+      } else {
+        const error = res.error as FetchBaseQueryError;
+        const message = error.data as AddressResponse;
+        toast.error(message.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  if (isLoading) return <Loader />;
 
   return (
     <Fragment>
@@ -131,10 +152,16 @@ const Shipping = () => {
                   <div className="col-md-4 mb-3" key={data._id}>
                     <div className="card">
                       <div className="card-body ">
-                        <button className="btn btn-dark position-absolute end-0 mx-3 edit " onClick={()=>navigate(`/editaddress/${data._id}`)}>
+                        <button
+                          className="btn btn-dark position-absolute end-0 mx-3 edit "
+                          onClick={() => navigate(`/editaddress/${data._id}`)}
+                        >
                           <FaPen />
                         </button>
-                        <button className="btn btn-dark position-absolute end-0  mx-5 edit">
+                        <button
+                          className="btn btn-dark position-absolute end-0  mx-5 edit"
+                          onClick={()=> handleDelete(data._id)}
+                        >
                           <FaTrash />
                         </button>
                         <p className="card-title">

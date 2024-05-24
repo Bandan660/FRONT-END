@@ -69,6 +69,7 @@ const AddAddress = () => {
         state,
         country,
         zip,
+        
       } = values;
 
       const res = await Address({
@@ -81,7 +82,7 @@ const AddAddress = () => {
         state,
         country,
         zip,
-        user: id,
+        Id: id,
       });
 
       if ("data" in res) {
@@ -89,8 +90,9 @@ const AddAddress = () => {
 
         toast.success("Address added successfully");
         resetForm();
-
         navigate("/product/shippinginfo");
+        window.location.reload()
+
       } else {
         setLoading(false);
 
