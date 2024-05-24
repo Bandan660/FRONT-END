@@ -8,21 +8,11 @@ import {
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import toast from "react-hot-toast";
 import { AddressResponse } from "../../../Types/api_types";
-import { CircularProgress } from "@mui/material";
 import { decryptCode } from "../../../Utils/util";
 import { FaPen, FaTrash } from "react-icons/fa";
-
-interface FormValues {
-  firstname: string;
-  lastname: string;
-  email: string;
-  phone: number;
-  address: string;
-  city: string;
-  state: string;
-  country: string;
-  zip: number;
-}
+import { useNavigate } from "react-router-dom";
+import { Address, AddressFormValues } from "../../../Types/types";
+import Loader from "../../../Components/Loader";
 
 const initialValues = {
   firstname: "",
@@ -59,6 +49,7 @@ const validationSchema = Yup.object().shape({
 const Shipping = () => {
   const [Address] = useCreateAddressMutation();
   const [isloading, setloading] = useState(false);
+  const navigate = useNavigate();
 
   // get the user and decoding the user id
   const userid = localStorage.getItem("$I") || "";
@@ -69,7 +60,10 @@ const Shipping = () => {
 
   //handle form submit for creating address
 
-  const handleSubmit = async (values: FormValues, { resetForm }: any) => {
+  const handleSubmit = async (
+    values: AddressFormValues,
+    { resetForm }: any
+  ) => {
     setloading(true);
     try {
       const {
@@ -114,21 +108,35 @@ const Shipping = () => {
     }
   };
 
-  if (isLoading) return <h1 className="text-center">loading...</h1>;
+  if (isLoading) return <Loader/>;
+  
 
   return (
     <Fragment>
       <section className="shipping info">
         <div className="container">
           {alladdress.length >= 1 ? (
-            <div className="row">
-              <div className="col-12">
-                {alladdress.map((data: FormValues) => (
-                  <div className="col-md-3">
+            <div className="row mt-5">
+              <div className="d-flex col-md-12 justify-content-between align-items-center mb-4">
+                <h2 className="address-title">Shipping Address</h2>
+                <button
+                  className="btn btn-dark"
+                  onClick={() => navigate("/addaddress")}
+                >
+                  Add New Address
+                </button>
+              </div>
+              <div className="row d-flex">
+                {alladdress.map((data: Address) => (
+                  <div className="col-md-4 mb-3" key={data._id}>
                     <div className="card">
-                      <div className="card-body">
-                        <button className="btn btn-dark position-absolute end-0 mx-3"><FaPen/></button>
-                        <button className="btn btn-dark position-absolute end-0 my-5 mx-3"><FaTrash/></button>
+                      <div className="card-body ">
+                        <button className="btn btn-dark position-absolute end-0 mx-3 edit " onClick={()=>navigate(`/editaddress/${data._id}`)}>
+                          <FaPen />
+                        </button>
+                        <button className="btn btn-dark position-absolute end-0  mx-5 edit">
+                          <FaTrash />
+                        </button>
                         <p className="card-title">
                           Full Name : {data.firstname} {data.lastname}
                         </p>
@@ -307,7 +315,11 @@ const Shipping = () => {
                           className="btn btn-dark  py-8  mb-4 rounded-2 float-end"
                         >
                           {isloading ? (
-                            <CircularProgress color="inherit" />
+                            <span
+                              className="spinner-border spinner-border-sm"
+                              role="status"
+                              aria-hidden="true"
+                            ></span>
                           ) : (
                             "Add Address"
                           )}

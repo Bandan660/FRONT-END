@@ -210,7 +210,7 @@ const Header = () => {
                   <div className="cart-container w-100">
                     <div className="row">
                       {cartItems.map((item, index) => (
-                        <div key={index} className="d-flex gap-4 border-bottom py-3">
+                        <div key={index} className="d-flex gap-4 border-bottom py-3" onClick={()=>navigate("/checkout/cart")}>
                           <div className="col-3">
                             <img
                               src={item.image}
@@ -237,7 +237,7 @@ const Header = () => {
                                 type="button"
                                 onClick={() =>
                                   decrementhandler(item)
-                                } /* corrected here */
+                                } 
                                 disabled={
                                   item.quantity === 1
                                 } 

@@ -52,7 +52,8 @@ export interface Cart {
 }
 
 export interface Address {
-  Id:string,
+  _id:string,
+  user:string,
   firstname: string;
   lastname: string;
   email: string;
@@ -62,4 +63,17 @@ export interface Address {
   state: string;
   country: string;
   zip: number;
+}
+
+export interface AddressFormValues {
+  firstname: string;
+  lastname: string;
+  email: string;
+  phone: number;
+  address: string;
+  city: string;
+  state: string;
+  country: string;
+  zip: number;
+  Id:string
 }

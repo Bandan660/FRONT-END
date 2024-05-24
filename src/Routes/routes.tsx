@@ -1,4 +1,4 @@
-import React, { Fragment, lazy, Suspense } from "react";
+import React, { Fragment, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useUserdetailsQuery } from "../Redux/api/userAPI";
@@ -6,10 +6,15 @@ import { decryptCode } from "../Utils/util";
 import ProtectedRoute from "./ProctedRoutes/ProctedRoute";
 import AllProduct from "../Pages/MainScreen/Product/AllProduct";
 import Shipping from "../Pages/MainScreen/Cart/Shipping";
+import AddAddress from "../Pages/MainScreen/Address/AddAddress";
+import EditAddress from "../Pages/MainScreen/Address/EditAddress";
+
 
 // importing routes for main
 const Home = lazy(() => import("../Pages/MainScreen/Home"));
-const ProductDetails = lazy(() => import("../Pages/MainScreen/Product/ProductDetails"));
+const ProductDetails = lazy(
+  () => import("../Pages/MainScreen/Product/ProductDetails")
+);
 const Cart = lazy(() => import("../Pages/MainScreen/Cart/Cart"));
 const LoginForm = lazy(() => import("../Components/AuthComponent/Login"));
 const RegisterForm = lazy(() => import("../Components/AuthComponent/Register"));
@@ -64,6 +69,22 @@ const Routing = () => {
             element={
               <ProtectedRoute isAuthnticated={userid ? false : true}>
                 <LoginForm />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/addaddress"
+            element={
+              <ProtectedRoute isAuthnticated={userid ? true : false}>
+                <AddAddress />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/editaddress/:id"
+            element={
+              <ProtectedRoute isAuthnticated={userid ? true : false}>
+                <EditAddress />
               </ProtectedRoute>
             }
           />
