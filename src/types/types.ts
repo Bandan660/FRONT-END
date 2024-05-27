@@ -52,8 +52,8 @@ export interface Cart {
 }
 
 export interface Address {
-  _id:string,
-  user:string,
+  _id: string;
+  user: string;
   firstname: string;
   lastname: string;
   email: string;
@@ -75,5 +75,21 @@ export interface AddressFormValues {
   state: string;
   country: string;
   zip: number;
-  Id:string
+  Id: string;
+}
+export interface OrderData {
+  _id: string;
+  shippingInfo: string;
+  user: string;
+  subtotal: number;
+  total: number;
+  status: string;
+  paymentstatus: string;
+  razorpayOrderId: string;
+  cartItems: [];
+}
+
+export interface Order {
+  
+
 }

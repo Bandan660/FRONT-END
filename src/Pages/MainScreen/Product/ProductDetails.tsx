@@ -81,6 +81,7 @@ const ProductDetails = () => {
             image: image ?? "",
             title: title ?? "",
             price,
+
           })
         );
 
@@ -96,7 +97,7 @@ const ProductDetails = () => {
 
   useEffect(() => {
     if (data) {
-      setImage(data.thumbnail); // Assuming images is an array, set the first image
+      setImage(data.thumbnail); 
       setTitle(data.title);
       setPrice(data.price);
     }

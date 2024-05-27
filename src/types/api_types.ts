@@ -1,4 +1,4 @@
-import { Address, Product, User } from "./types";
+import { Address, Order, OrderData, Product, User } from "./types";
 
 export type MessageResponce = {
   message: string;
@@ -17,4 +17,9 @@ export type ProductResponce={
 export type AddressResponse={
   message: string;
   address: Address[];
+}
+
+export type OrderResponse={
+  message: string;
+  order:OrderData ;
 }

@@ -14,7 +14,10 @@ import { FaPen, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { Address, AddressFormValues } from "../../../Types/types";
 import Loader from "../../../Components/Loader";
-
+import {
+  useCreateOrderMutation,
+  useVerifyPaymentMutation,
+} from "../../../Redux/api/orderAPI";
 const initialValues = {
   firstname: "",
   lastname: "",
@@ -48,17 +51,35 @@ const validationSchema = Yup.object().shape({
 });
 
 const Shipping = () => {
+  const RAZORPAY_KEY_ID = import.meta.env.RAZORPAY_KEY_ID;
+
   const [Address] = useCreateAddressMutation();
-  const [deleteAddress]=useDeleteAddressMutation()
+  const [deleteAddress] = useDeleteAddressMutation();
   const [isloading, setloading] = useState(false);
+  const [orderloading, setOrderloading] = useState(false);
+  const [addressId, setAddressId] = useState<string>();
   const navigate = useNavigate();
 
   // get the user and decoding the user id
   const userid = localStorage.getItem("$I") || "";
   const id = decryptCode({ token: userid }).trim().replace(/\W/g, "");
 
-  const { data, isLoading, isError ,refetch} = useGetAddressQuery(id);
+  const { data, isLoading, isError, refetch } = useGetAddressQuery(id);
   const alladdress = data?.address || [];
+  const [createOrder] = useCreateOrderMutation();
+  const [verifyPayment] = useVerifyPaymentMutation();
+  const cartItems = localStorage.getItem("cart");
+  const cart = JSON.parse(cartItems);
+  console.log(cart);
+
+  const productid = [];
+  const data2 = productid.push(cart.productId);
+  console.log(data2);
+  const totalPrice = cart.reduce(
+    (total, item) => total + item.quantity * item.price,
+    0
+  );
+  console.log(totalPrice);
 
   //handle form submit for creating address
 
@@ -98,7 +119,7 @@ const Shipping = () => {
 
         toast.success("Address added successfully");
         resetForm();
-        window.location.reload()
+        window.location.reload();
       } else {
         setloading(false);
 
@@ -118,8 +139,6 @@ const Shipping = () => {
       if ("data" in res) {
         toast.success("Address deleted successfully");
         refetch();
-
-    
       } else {
         const error = res.error as FetchBaseQueryError;
         const message = error.data as AddressResponse;
@@ -127,6 +146,82 @@ const Shipping = () => {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  // handle order api
+
+  const handleOrder = async () => {
+    if(!addressId){
+      toast.error("Please select a address");
+      setOrderloading(false)
+
+
+    }
+
+    try {
+      setOrderloading(true)
+
+      // Create an order on your backend
+      const orderData = {
+        amount: totalPrice,
+        currency: "INR",
+        receipt: "receipt#1",
+        notes: {
+          note1: "This is a test order",
+        },
+        userId: id,
+        shippingInfo: addressId,
+        cartItems: cart,
+      };
+
+
+      const orderResponse = await createOrder(orderData);
+      const { total, razorpayOrderId } = orderResponse.data.order;
+     
+
+      setOrderloading(false)
+
+      // Razorpay options
+      const options = {
+        key: "rzp_test_40xWXMi2i2v7Xo",
+        amount: total,
+        currency: "INR",
+        order_id: razorpayOrderId,
+        name: "Sayanaworldverse",
+        description: "Test Transaction",
+        image: "https://sayanaworldverse.com/assets/logo-mN3UHO78.webp",
+        handler: async (response) => {
+          const paymentData = {
+            razorpayPaymentId: response.razorpay_payment_id,
+            razorpayOrderId: response.razorpay_order_id,
+            razorpaySignature: response.razorpay_signature,
+          };
+
+          const verificationResponse = await verifyPayment(paymentData);
+
+          toast.success("payment successfull");
+          setOrderloading(false)
+        },
+        prefill: {
+          name: "Bandan Pradhan",
+          email: "bandan472000@gmail.com",
+          contact: "7077407660",
+        },
+        notes: {
+          address: "Hyderabad",
+        },
+        theme: {
+          color: "#212529",
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      console.error("Error creating Razorpay order:", error);
+      setOrderloading(false)
+
     }
   };
 
@@ -149,8 +244,13 @@ const Shipping = () => {
               </div>
               <div className="row d-flex">
                 {alladdress.map((data: Address) => (
-                  <div className="col-md-4 mb-3" key={data._id}>
-                    <div className="card">
+                  <div
+                    className={`col-md-4 mb-3  `}
+                    key={data._id}
+                    onClick={() => setAddressId(data._id)}
+                    
+                  >
+                    <div className={`card  ${addressId === data._id ? "border-1 border-black" : ""}`}>
                       <div className="card-body ">
                         <button
                           className="btn btn-dark position-absolute end-0 mx-3 edit "
@@ -160,7 +260,7 @@ const Shipping = () => {
                         </button>
                         <button
                           className="btn btn-dark position-absolute end-0  mx-5 edit"
-                          onClick={()=> handleDelete(data._id)}
+                          onClick={() => handleDelete(data._id)}
                         >
                           <FaTrash />
                         </button>
@@ -178,6 +278,26 @@ const Shipping = () => {
                     </div>
                   </div>
                 ))}
+              </div>
+              <div className="row p-0">
+                <div className="p-0 ">
+                  <button
+                    className="btn btn-dark float-end "
+                    onClick={handleOrder}
+                  >
+                    {orderloading ? (
+                      <>
+                        <span
+                          className="spinner-border spinner-border-sm"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                      </>
+                    ) : (
+                      <>Proceed To Payment</>
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           ) : (

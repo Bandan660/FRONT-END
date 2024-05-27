@@ -165,6 +165,7 @@ const Cartpage = () => {
                 <button
                   className="btn cart-btn"
                   onClick={() => navigate("/product/shippinginfo")}
+                  disabled={cartItems.length === 0}
                 >
                   PROCEED TO CHECKOUT
                 </button>

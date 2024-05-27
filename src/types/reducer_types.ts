@@ -12,4 +12,5 @@ export interface cartReducerinitialState{
   subtotal:number,
   total:number,
   shippingCharges:number
+  
 }
