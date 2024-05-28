@@ -8,7 +8,9 @@ import AllProduct from "../Pages/MainScreen/Product/AllProduct";
 import Shipping from "../Pages/MainScreen/Cart/Shipping";
 import AddAddress from "../Pages/MainScreen/Address/AddAddress";
 import EditAddress from "../Pages/MainScreen/Address/EditAddress";
-
+import ProctedRoute from "./ProctedRoutes/ProctedRoute";
+import UserProfile from "../Pages/MainScreen/Profile/UserProfile";
+import AllOrders from "../Pages/MainScreen/Profile/AllOrders";
 
 // importing routes for main
 const Home = lazy(() => import("../Pages/MainScreen/Home"));
@@ -85,6 +87,22 @@ const Routing = () => {
             element={
               <ProtectedRoute isAuthnticated={userid ? true : false}>
                 <EditAddress />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProctedRoute isAuthnticated={userid ? true : false}>
+                <UserProfile />
+              </ProctedRoute>
+            }
+          />
+          <Route
+            path="/allorders"
+            element={
+              <ProtectedRoute isAuthnticated={userid ? true : false}>
+                <AllOrders />
               </ProtectedRoute>
             }
           />

@@ -152,15 +152,13 @@ const Shipping = () => {
   // handle order api
 
   const handleOrder = async () => {
-    if(!addressId){
+    if (!addressId) {
       toast.error("Please select a address");
-      setOrderloading(false)
-
-
+      setOrderloading(false);
     }
 
     try {
-      setOrderloading(true)
+      setOrderloading(true);
 
       // Create an order on your backend
       const orderData = {
@@ -175,12 +173,10 @@ const Shipping = () => {
         cartItems: cart,
       };
 
-
       const orderResponse = await createOrder(orderData);
       const { total, razorpayOrderId } = orderResponse.data.order;
-     
 
-      setOrderloading(false)
+      setOrderloading(false);
 
       // Razorpay options
       const options = {
@@ -200,8 +196,8 @@ const Shipping = () => {
 
           const verificationResponse = await verifyPayment(paymentData);
 
-          toast.success("payment successfull");
-          setOrderloading(false)
+          toast.success("Order Placed Successfully");
+          setOrderloading(false);
         },
         prefill: {
           name: "Bandan Pradhan",
@@ -220,8 +216,7 @@ const Shipping = () => {
       rzp.open();
     } catch (error) {
       console.error("Error creating Razorpay order:", error);
-      setOrderloading(false)
-
+      setOrderloading(false);
     }
   };
 
@@ -248,9 +243,12 @@ const Shipping = () => {
                     className={`col-md-4 mb-3  `}
                     key={data._id}
                     onClick={() => setAddressId(data._id)}
-                    
                   >
-                    <div className={`card  ${addressId === data._id ? "border-1 border-black" : ""}`}>
+                    <div
+                      className={`card  ${
+                        addressId === data._id ? "border-1 border-black" : ""
+                      }`}
+                    >
                       <div className="card-body ">
                         <button
                           className="btn btn-dark position-absolute end-0 mx-3 edit "
