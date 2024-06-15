@@ -31,7 +31,7 @@ export interface Product {
   _id: string;
   title: string;
   price: number;
-  stock: number;
+  quantity: number;
   category: string;
   thumbnail: string;
   description: string;

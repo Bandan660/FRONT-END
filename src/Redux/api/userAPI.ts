@@ -46,8 +46,20 @@ export const userApi = createApi({
         };
       },
     }),
+    Alluser:builder.query({
+      query: () => {
+        return {
+          url: "getallusers",
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${AuthToken}`,
+          },
+        };
+      },
+
+    })
   }),
 });
 
-export const { useRegisterMutation, useLoginMutation, useUserdetailsQuery } =
+export const { useRegisterMutation, useLoginMutation, useUserdetailsQuery,useAlluserQuery } =
   userApi;

@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 import { Navigate, Outlet } from "react-router-dom";
+import Loader from "../../Components/Loader";
 
 interface props {
   isAuthnticated: boolean;
@@ -18,7 +19,7 @@ const ProctedRoute = ({
 }: props) => {
   if (!isAuthnticated) return <Navigate to={redirect} />;
 
-  if (adminRoute && !isAdmin) return <div><h1 className="text-center">Geide gopi jatara dekhi, sabu mahalia darkar tote chhudipua</h1></div>
+  if (adminRoute && !isAdmin) return <Loader/>
 
   return children ? children : <Outlet/>;
 };

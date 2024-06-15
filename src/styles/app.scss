@@ -83,7 +83,7 @@ ul {
 @import "front-end-styles/shipping";
 
 .admin-container {
-  @include grid(1fr 4fr, 2rem);
+  @include grid(1fr 4fr, 1rem);
   height: 100vh;
   background-color: rgb(247, 247, 247);
   > aside {

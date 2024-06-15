@@ -60,7 +60,11 @@ const AllProduct: React.FC = () => {
   };
 
   if (categoryLoading || productLoading) {
-    return <div><Loader/></div>;
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
   }
 
   return (

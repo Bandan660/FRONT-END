@@ -8,7 +8,7 @@ import Table from "../../Components/admin/DashboardTable";
 
 const userImg =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJxA5cTf-5dh5Eusm0puHbvAhOrCRPtckzjA&usqp";
-  import data from "../../../public/assets/data.json"
+import data from "../../../public/assets/data.json";
 
 const Dashboard = () => {
   return (
@@ -63,40 +63,6 @@ const Dashboard = () => {
               bgColor_2="rgba(53, 162, 235, 0.8)"
             />
           </div>
-
-          <div className="dashboard-categories">
-            <h2>Inventory</h2>
-
-            <div>
-              {data.categories.map((i) => (
-                <CategoryItem
-                  key={i.heading}
-                  value={i.value}
-                  heading={i.heading}
-                  color={`hsl(${i.value * 4}, ${i.value}%, 50%)`}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="transaction-container">
-          <div className="gender-chart">
-            <h2>Gender Ratio</h2>
-            <DoughnutChart
-              labels={["Female", "Male"]}
-              data={[12, 19]}
-              backgroundColor={[
-                "hsl(340, 82%, 56%)",
-                "rgba(53, 162, 235, 0.8)",
-              ]}
-              cutout={90}
-            />
-            <p>
-              <BiMaleFemale />
-            </p>
-          </div>
-          <Table data={data.transaction} />
         </section>
       </main>
     </div>

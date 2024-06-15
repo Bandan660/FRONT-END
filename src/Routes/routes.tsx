@@ -1,4 +1,4 @@
-import React, { Fragment, lazy } from "react";
+import  { Fragment, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useUserdetailsQuery } from "../Redux/api/userAPI";
@@ -29,9 +29,7 @@ const Transaction = lazy(() => import("../Pages/admin/transaction"));
 const Barcharts = lazy(() => import("../Pages/admin/charts/barcharts"));
 const Piecharts = lazy(() => import("../Pages/admin/charts/piecharts"));
 const Linecharts = lazy(() => import("../Pages/admin/charts/linecharts"));
-const Coupon = lazy(() => import("../Pages/admin/apps/coupon"));
-const Stopwatch = lazy(() => import("../Pages/admin/apps/stopwatch"));
-const Toss = lazy(() => import("../Pages/admin/apps/toss"));
+
 const NewProduct = lazy(() => import("../Pages/admin/management/newproduct"));
 const ProductManagement = lazy(
   () => import("../Pages/admin/management/productmanagement")
@@ -125,10 +123,7 @@ const Routing = () => {
             <Route path="/admin/chart/bar" element={<Barcharts />} />
             <Route path="/admin/chart/pie" element={<Piecharts />} />
             <Route path="/admin/chart/line" element={<Linecharts />} />
-            {/* Apps */}
-            <Route path="/admin/app/coupon" element={<Coupon />} />
-            <Route path="/admin/app/stopwatch" element={<Stopwatch />} />
-            <Route path="/admin/app/toss" element={<Toss />} />
+       
 
             {/* Management */}
             <Route path="/admin/product/new" element={<NewProduct />} />

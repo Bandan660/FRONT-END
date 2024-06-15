@@ -3,8 +3,6 @@ import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useCreateAddressMutation } from "../../../Redux/api/addressAPI";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import toast from "react-hot-toast";
-import { AddressResponse } from "../../../Types/api_types";
 import { decryptCode } from "../../../Utils/util";
 import { useNavigate } from "react-router-dom";
 import { AddressFormValues } from "../../../Types/types";

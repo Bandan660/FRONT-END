@@ -1,107 +1,39 @@
-import { ReactElement, useState } from "react";
-import { FaTrash } from "react-icons/fa";
-import { Column } from "react-table";
 import AdminSidebar from "../../Components/admin/AdminSidebar";
-import TableHOC from "../../Components/admin/TableHOC";
-
-interface DataType {
-  avatar: ReactElement;
-  name: string;
-  email: string;
-  gender: string;
-  role: string;
-  action: ReactElement;
-}
-
-const columns: Column<DataType>[] = [
-  {
-    Header: "Avatar",
-    accessor: "avatar",
-  },
-  {
-    Header: "Name",
-    accessor: "name",
-  },
-  {
-    Header: "Gender",
-    accessor: "gender",
-  },
-  {
-    Header: "Email",
-    accessor: "email",
-  },
-  {
-    Header: "Role",
-    accessor: "role",
-  },
-  {
-    Header: "Action",
-    accessor: "action",
-  },
-];
-
-const img = "https://randomuser.me/api/portraits/women/54.jpg";
-const img2 = "https://randomuser.me/api/portraits/women/50.jpg";
-
-const arr: Array<DataType> = [
-  {
-    avatar: (
-      <img
-        style={{
-          borderRadius: "50%",
-        }}
-        src={img}
-        alt="Shoes"
-      />
-    ),
-    name: "Emily Palmer",
-    email: "emily.palmer@example.com",
-    gender: "female",
-    role: "user",
-    action: (
-      <button>
-        <FaTrash />
-      </button>
-    ),
-  },
-
-  {
-    avatar: (
-      <img
-        style={{
-          borderRadius: "50%",
-        }}
-        src={img2}
-        alt="Shoes"
-      />
-    ),
-    name: "May Scoot",
-    email: "aunt.may@example.com",
-    gender: "female",
-    role: "user",
-    action: (
-      <button>
-        <FaTrash />
-      </button>
-    ),
-  },
-];
+import { useAlluserQuery } from "../../Redux/api/userAPI";
 
 const Customers = () => {
-  const [rows, setRows] = useState<DataType[]>(arr);
-
-  const Table = TableHOC<DataType>(
-    columns,
-    rows,
-    "dashboard-product-box",
-    "Customers",
-    rows.length > 6
-  )();
-
+  const { data, isLoading, isError } = useAlluserQuery({});
+  console.log(data);
   return (
     <div className="admin-container">
       <AdminSidebar />
-      <main>{Table}</main>
+      <main>
+        <table className="table">
+          <thead className="table-dark">
+            <tr>
+              <th>Cust id</th>
+              <th>Customer Name</th>
+              <th>Email</th>
+              <th>Mobile</th>
+              <th>role</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data &&
+              data.map((item) => {
+                return (
+                  <tr>
+                    <td>{item._id}</td>
+                    <td>{item.fullname}</td>
+                    <td>{item.email}</td>
+                    <td>{item.mobile}</td>
+                    <td>{item.role}</td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
+      </main>
     </div>
   );
 };

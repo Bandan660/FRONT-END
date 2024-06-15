@@ -1,79 +1,63 @@
-import { ReactElement, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { Column } from "react-table";
 import AdminSidebar from "../../Components/admin/AdminSidebar";
-import TableHOC from "../../Components/admin/TableHOC";
-
-interface DataType {
-  photo: ReactElement;
-  name: string;
-  price: number;
-  stock: number;
-  action: ReactElement;
-}
-
-const columns: Column<DataType>[] = [
-  {
-    Header: "Photo",
-    accessor: "photo",
-  },
-  {
-    Header: "Name",
-    accessor: "name",
-  },
-  {
-    Header: "Price",
-    accessor: "price",
-  },
-  {
-    Header: "Stock",
-    accessor: "stock",
-  },
-  {
-    Header: "Action",
-    accessor: "action",
-  },
-];
-
-const img =
-  "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c2hvZXN8ZW58MHx8MHx8&w=1000&q=804";
-
-const img2 = "https://m.media-amazon.com/images/I/514T0SvwkHL._SL1500_.jpg";
-
-const arr: Array<DataType> = [
-  {
-    photo: <img src={img} alt="Shoes" />,
-    name: "Puma Shoes Air Jordan Cook Nigga 2023",
-    price: 690,
-    stock: 3,
-    action: <Link to="/admin/product/sajknaskd">Manage</Link>,
-  },
-
-  {
-    photo: <img src={img2} alt="Shoes" />,
-    name: "Macbook",
-    price: 232223,
-    stock: 213,
-    action: <Link to="/admin/product/sdaskdnkasjdn">Manage</Link>,
-  },
-];
+import { useGetProductsQuery } from "../../Redux/api/productAPI";
+import { Skeleton } from "@mui/material";
+import { Product } from "../../Types/types";
+import { useNavigate } from "react-router-dom";
+import Loader from "../../Components/Loader";
 
 const Products = () => {
-  const [rows, setRows] = useState<DataType[]>(arr);
-
-  const Table = TableHOC<DataType>(
-    columns,
-    rows,
-    "dashboard-product-box",
-    "Products",
-    rows.length > 6
-  )();
+  const navigate = useNavigate();
+  const { data: product, isLoading, isError } = useGetProductsQuery({});
+  const data = product?.product;
+  console.log(data);
 
   return (
     <div className="admin-container">
       <AdminSidebar />
-      <main>{Table}</main>
+      <main>
+        {isError && <p>Something went wrong</p>}
+        {data && (
+          <table className="table  ">
+            <thead className="thead table-dark">
+              <tr>
+                <th>image</th>
+
+                <th>Title</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Edit</th>
+              </tr>
+            </thead>
+
+            {data.map((product: Product) => (
+              <tbody>
+                <tr>
+                  <td>
+                    <img src={product.thumbnail} alt="" />
+                  </td>
+                  <td>{product.title}</td>
+                  <td>{product.price}</td>
+                  <td>{product.quantity}</td>
+                  <td>{product.category}</td>
+                  <td>{product.description}</td>
+                  <td>
+                    <button
+                      className="badge bg-dark "
+                      onClick={() => navigate(`/admin/product/${product._id}`)}
+                    >
+                      Manage
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            ))}
+          </table>
+        )}
+      </main>
       <Link to="/admin/product/new" className="create-product-btn">
         <FaPlus />
       </Link>
